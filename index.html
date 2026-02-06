@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COGEPAM - Froid Industriel & Climatisation | Groupe Bayoudh Metals</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --primary: #1e3c72;
@@ -40,7 +42,7 @@
             overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* Navigation - Original Style */
         nav {
             position: fixed;
             top: 0;
@@ -109,6 +111,85 @@
         nav a.active {
             color: var(--cogepam-blue);
             background: rgba(0, 107, 143, 0.1);
+        }
+
+        /* Language Selector */
+        .lang-selector {
+            position: relative;
+            margin-left: 1rem;
+        }
+
+        .lang-btn {
+            background: var(--cogepam-blue);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: var(--cogepam-dark);
+            transform: translateY(-2px);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            overflow: hidden;
+            min-width: 150px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .lang-option:last-child {
+            border-bottom: none;
+        }
+
+        .lang-option:hover {
+            background: var(--light-gray);
+        }
+
+        .lang-option.active {
+            background: rgba(0, 107, 143, 0.1);
+            color: var(--cogepam-blue);
+        }
+
+        .lang-flag {
+            width: 24px;
+            height: 16px;
+            border-radius: 3px;
+            object-fit: cover;
         }
 
         /* Mobile Menu Toggle */
@@ -472,7 +553,7 @@
             font-weight: bold;
         }
 
-        /* About Section - Updated without image */
+        /* About Section */
         .about-content-full {
             max-width: 900px;
             margin: 0 auto;
@@ -589,11 +670,7 @@
             margin-bottom: 0.5rem;
         }
 
-        .service-highlight strong {
-            color: var(--white);
-        }
-
-        /* Adiabatic Section - Updated with 2 vertical images */
+        /* Adiabatic Section */
         .adiabatic-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -601,54 +678,33 @@
             align-items: start;
         }
 
-        /* Images de la section chambres froides - 33% de largeur */
-.adiabatic-images-column {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 33%;
-}
+        .adiabatic-images-column {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 33%;
+        }
 
-.adiabatic-image {
-    width: 100%;
-    height: 300px; /* Hauteur fixe pour cohérence */
-    object-fit: cover; /* Recadrage intelligent pour remplir l'espace */
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
+        .adiabatic-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
 
-.adiabatic-image:hover {
-    transform: scale(1.05);
-}
+        .adiabatic-image:hover {
+            transform: scale(1.05);
+        }
 
-/* Ajustement de la grille pour 33% / 67% */
-.adiabatic-grid {
-    display: grid;
-    grid-template-columns: 33% 1fr; /* 33% pour images, reste pour texte */
-    gap: 3rem;
-    align-items: start;
-}
-/* Responsive */
-@media (max-width: 968px) {
-    .adiabatic-grid {
-        grid-template-columns: 1fr; /* Une colonne sur mobile */
-    }
-    
-    .adiabatic-images-column {
-        width: 100%;
-    }
-    
-    .adiabatic-image {
-        height: 250px;
-    }
-}
+        .adiabatic-grid {
+            display: grid;
+            grid-template-columns: 33% 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
 
-@media (max-width: 576px) {
-    .adiabatic-image {
-        height: 200px;
-    }
-}
         .adiabatic-features {
             display: grid;
             gap: 1.5rem;
@@ -746,71 +802,216 @@
             font-size: 1rem;
         }
 
-        /* Partnership Section */
+        /* Cold Rooms Section - Enhanced */
+        .cold-room-types {
+            margin: 3rem 0;
+        }
+
+        .subsection-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            color: var(--cogepam-blue);
+        }
+
+        .types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .type-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .type-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            border-color: var(--cogepam-blue);
+        }
+
+        .type-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .type-icon.positive {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .type-icon.negative {
+            background: linear-gradient(135deg, #0066cc 0%, #003d7d 100%);
+        }
+
+        .type-icon.tunnel {
+            background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+        }
+
+        .type-icon.modular {
+            background: linear-gradient(135deg, #fd7e14 0%, #e56b0a 100%);
+        }
+
+        .type-card h4 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--cogepam-blue);
+        }
+
+        .type-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Maintenance Section */
+        .maintenance-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 3rem;
+            border-radius: 20px;
+            margin-top: 4rem;
+        }
+
+        .maintenance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .maintenance-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .maintenance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .maintenance-icon {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .maintenance-icon.preventive {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+
+        .maintenance-icon.curative {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .maintenance-card h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--cogepam-blue);
+        }
+
+        .maintenance-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .maintenance-card ul li {
+            padding: 0.7rem 0;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .maintenance-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .maintenance-card ul li i {
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+
+        /* Partnership Section with Dual Charts */
         .partnership-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
-            align-items: center;
+            align-items: start;
         }
 
-        .partnership-content h3 {
-            font-size: 2rem;
-            color: var(--gold);
-            margin-bottom: 1.5rem;
-        }
-
-        .partnership-content p {
-            color: var(--text-light);
-            line-height: 1.8;
-            margin-bottom: 1rem;
-            font-size: 1.05rem;
-        }
-
-        .market-potential {
-            background: var(--white);
-            border-radius: 20px;
+        .chart-container {
+            background: white;
             padding: 2rem;
-            border: 1px solid var(--medium-gray);
-            margin-top: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
         }
 
-        .market-potential h4 {
-            font-size: 1.3rem;
-            color: var(--primary);
+        .chart-header {
+            text-align: center;
             margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
         }
 
-        .market-potential h4 i {
-            color: var(--gold);
+        .chart-header h3 {
+            font-size: 1.3rem;
+            color: var(--cogepam-blue);
+            margin-bottom: 0.5rem;
         }
 
-        .market-stats {
+        .chart-wrapper {
+            height: 300px;
+            margin-bottom: 1rem;
+        }
+
+        .chart-stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+            gap: 1rem;
+            margin-top: 1rem;
         }
 
-        .market-stat {
+        .chart-stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 1rem;
+            border-radius: 12px;
             text-align: center;
-            padding: 1.5rem;
-            background: var(--light-gray);
-            border-radius: 15px;
         }
 
-        .market-stat-number {
-            font-size: 2rem;
+        .chart-stat-value {
+            font-size: 1.8rem;
             font-weight: 800;
-            color: var(--gold);
+            color: var(--cogepam-blue);
             margin-bottom: 0.3rem;
         }
 
-        .market-stat-label {
-            color: var(--text-light);
-            font-size: 0.9rem;
+        .chart-stat-label {
+            font-size: 0.85rem;
+            color: #666;
         }
 
         .partnership-benefits {
@@ -950,6 +1151,20 @@
             z-index: 1;
         }
 
+        .slide-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--cogepam-blue);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
         .slider-controls {
             display: flex;
             justify-content: center;
@@ -1004,7 +1219,7 @@
             transform: scale(1.2);
         }
 
-        /* References Section - Updated without project details */
+        /* References Section */
         .references-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -1052,7 +1267,7 @@
             font-size: 0.85rem;
         }
 
-        /* Footer */
+        /* Footer with Map */
         footer {
             background: var(--cogepam-dark);
             padding: 4rem 2rem 2rem;
@@ -1091,6 +1306,20 @@
             gap: 0.5rem;
         }
 
+        .map-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         .copyright {
             text-align: center;
             margin-top: 3rem;
@@ -1110,7 +1339,6 @@
             .partnership-grid { grid-template-columns: 1fr; }
             .references-grid { grid-template-columns: repeat(2, 1fr); }
             .comparison-stats { grid-template-columns: 1fr; }
-            .market-stats { grid-template-columns: 1fr; }
             
             .slider-slide {
                 width: 70%;
@@ -1171,6 +1399,10 @@
                 display: block;
             }
             
+            .lang-selector {
+                margin: 1rem 0;
+            }
+            
             section { padding: 100px 1rem 60px; }
             .section-title { font-size: 2rem; }
             .hero-title { font-size: 1.8rem; }
@@ -1225,15 +1457,38 @@
             <button class="menu-close" id="menuClose">
                 <i class="fas fa-times"></i>
             </button>
-            <a href="#hero" class="nav-link active"><i class="fas fa-home"></i> Accueil</a>
-            <a href="#about" class="nav-link"><i class="fas fa-building"></i> Qui Sommes-nous</a>
-            <a href="#services" class="nav-link"><i class="fas fa-cogs"></i> Services</a>
-            <a href="#chiffres" class="nav-link"><i class="fas fa-chart-bar"></i> Chiffres</a>
-            <a href="#adiabatic" class="nav-link"><i class="fas fa-wind"></i> Adiabatique</a>
-            <a href="#cold-rooms" class="nav-link"><i class="fas fa-snowflake"></i> Frigorifique</a>
-            <a href="#partnership" class="nav-link"><i class="fas fa-handshake"></i> Collaboration</a>
-            <a href="#gallery" class="nav-link"><i class="fas fa-images"></i> Galerie</a>
-            <a href="#references" class="nav-link"><i class="fas fa-star"></i> References</a>
+            <a href="#hero" class="nav-link active" data-i18n="nav.home"><i class="fas fa-home"></i> Accueil</a>
+            <a href="#about" class="nav-link" data-i18n="nav.about"><i class="fas fa-building"></i> Qui Sommes-nous</a>
+            <a href="#services" class="nav-link" data-i18n="nav.services"><i class="fas fa-cogs"></i> Services</a>
+            <a href="#chiffres" class="nav-link" data-i18n="nav.numbers"><i class="fas fa-chart-bar"></i> Chiffres</a>
+            <a href="#adiabatic" class="nav-link" data-i18n="nav.adiabatic"><i class="fas fa-wind"></i> Adiabatique</a>
+            <a href="#cold-rooms" class="nav-link" data-i18n="nav.cold"><i class="fas fa-snowflake"></i> Frigorifique</a>
+            <a href="#partnership" class="nav-link" data-i18n="nav.partnership"><i class="fas fa-handshake"></i> Collaboration</a>
+            <a href="#gallery" class="nav-link" data-i18n="nav.gallery"><i class="fas fa-images"></i> Galerie</a>
+            <a href="#references" class="nav-link" data-i18n="nav.references"><i class="fas fa-star"></i> Références</a>
+            
+            <!-- Language Selector -->
+            <div class="lang-selector">
+                <button class="lang-btn" onclick="toggleLangDropdown()">
+                    <img src="https://flagcdn.com/w40/fr.png" alt="FR" class="lang-flag" id="currentFlag">
+                    <span id="currentLang">FR</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <div class="lang-option active" onclick="changeLanguage('fr')">
+                        <img src="https://flagcdn.com/w40/fr.png" alt="FR" class="lang-flag">
+                        <span>Français</span>
+                    </div>
+                    <div class="lang-option" onclick="changeLanguage('en')">
+                        <img src="https://flagcdn.com/w40/gb.png" alt="EN" class="lang-flag">
+                        <span>English</span>
+                    </div>
+                    <div class="lang-option" onclick="changeLanguage('tr')">
+                        <img src="https://flagcdn.com/w40/tr.png" alt="TR" class="lang-flag">
+                        <span>Türkçe</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
     <div class="nav-overlay" id="navOverlay"></div>
@@ -1243,18 +1498,18 @@
         <div class="hero-overlay"></div>
         <div class="content-wrapper">
             <div class="hero-content">
-                <h1 class="hero-title">Comptoir General de Panneaux et de Metaux</h1>
-                <p class="hero-group"><i class="fas fa-industry"></i> Filiale du Groupe Bayoudh Metals (GBM)</p>
-                <p class="hero-description">
-                    Expert en solutions de <strong>refrigeration industrielle et commerciale</strong>. 
+                <h1 class="hero-title" data-i18n="hero.title">Comptoir General de Panneaux et de Metaux</h1>
+                <p class="hero-group"><i class="fas fa-industry"></i> <span data-i18n="hero.subtitle">Filiale du Groupe Bayoudh Metals (GBM)</span></p>
+                <p class="hero-description" data-i18n="hero.description">
+                    Expert en solutions de refrigeration industrielle et commerciale. 
                     Nous concevons et realisons des installations cles en main pour l'industrie alimentaire, 
                     avec un engagement total vers l'excellence technique et la satisfaction client.
                 </p>
                 <div>
-                    <a href="#services" class="cta-button">
+                    <a href="#services" class="cta-button" data-i18n="hero.cta1">
                         <i class="fas fa-arrow-right"></i> Decouvrir COGEPAM
                     </a>
-                    <a href="#references" class="cta-secondary">
+                    <a href="#references" class="cta-secondary" data-i18n="hero.cta2">
                         <i class="fas fa-phone"></i> Nous Contacter
                     </a>
                 </div>
@@ -1262,13 +1517,13 @@
         </div>
     </section>
 
-    <!-- Chiffres Section - Design Creatif -->
+    <!-- Chiffres Section -->
     <section id="chiffres" class="chiffres-section">
         <div class="content-wrapper">
             <div class="section-header fade-in" style="color: white; margin-bottom: 4rem;">
-                <span class="section-badge" style="background: white; color: var(--cogepam-blue);">Nos Chiffres</span>
-                <h2 class="section-title" style="color: white; -webkit-text-fill-color: white;">COGEPAM en Chiffres</h2>
-                <p style="color: rgba(255,255,255,0.9);">Des chiffres qui temoignent de notre engagement et de notre expertise</p>
+                <span class="section-badge" style="background: white; color: var(--cogepam-blue);" data-i18n="stats.badge">Nos Chiffres</span>
+                <h2 class="section-title" style="color: white; -webkit-text-fill-color: white;" data-i18n="stats.title">COGEPAM en Chiffres</h2>
+                <p style="color: rgba(255,255,255,0.9);" data-i18n="stats.subtitle">Des chiffres qui temoignent de notre engagement et de notre expertise</p>
             </div>
             <div class="chiffres-grid">
                 <div class="chiffre-card fade-in">
@@ -1276,52 +1531,52 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <div class="chiffre-number">100<span>%</span></div>
-                    <div class="chiffre-label">Clients Satisfaits</div>
-                    <div class="chiffre-sublabel">Engagement qualite garanti</div>
+                    <div class="chiffre-label" data-i18n="stats.stat1">Clients Satisfaits</div>
+                    <div class="chiffre-sublabel" data-i18n="stats.sub1">Engagement qualite garanti</div>
                 </div>
                 <div class="chiffre-card fade-in">
                     <div class="chiffre-icon">
                         <i class="fas fa-calendar-alt"></i>
                     </div>
-                    <div class="chiffre-number">Plus de 10</div>
-                    <div class="chiffre-label">Ans d'Experience</div>
-                    <div class="chiffre-sublabel">Expertise confirmee dans le froid</div>
+                    <div class="chiffre-number" data-i18n="stats.stat2_num">Plus de 10</div>
+                    <div class="chiffre-label" data-i18n="stats.stat2">Ans d'Experience</div>
+                    <div class="chiffre-sublabel" data-i18n="stats.sub2">Expertise confirmee dans le froid</div>
                 </div>
                 <div class="chiffre-card fade-in">
                     <div class="chiffre-icon">
                         <i class="fas fa-industry"></i>
                     </div>
-                    <div class="chiffre-number">Plus de 15</div>
-                    <div class="chiffre-label">Secteurs d'Activite</div>
-                    <div class="chiffre-sublabel">Couverture nationale complete</div>
+                    <div class="chiffre-number" data-i18n="stats.stat3_num">Plus de 15</div>
+                    <div class="chiffre-label" data-i18n="stats.stat3">Secteurs d'Activite</div>
+                    <div class="chiffre-sublabel" data-i18n="stats.sub3">Couverture nationale complete</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Section - Updated without image -->
+    <!-- About Section -->
     <section id="about">
         <div class="content-wrapper">
             <div class="section-header fade-in">
-                <span class="section-badge">Qui Sommes-nous</span>
-                <h2 class="section-title">Notre Histoire & Notre Expertise</h2>
-                <p class="section-subtitle">
+                <span class="section-badge" data-i18n="about.badge">Qui Sommes-nous</span>
+                <h2 class="section-title" data-i18n="about.title">Notre Histoire & Notre Expertise</h2>
+                <p class="section-subtitle" data-i18n="about.subtitle">
                     De la vision a la realite, COGEPAM s'est impose comme reference du froid industriel en Tunisie
                 </p>
             </div>
             <div class="about-content-full fade-in">
-                <h3>Une Entreprise, Une Vision</h3>
-                <p>
+                <h3 data-i18n="about.heading">Une Entreprise, Une Vision</h3>
+                <p data-i18n="about.p1">
                     <strong>COGEPAM</strong> (Comptoir General de Panneaux et de Metaux) est une entreprise 
                     specialisee dans le domaine de la <strong>refrigeration industrielle et commerciale</strong>. 
                     Notre activite repose sur le developpement de solutions integrales pour l'industrie alimentaire.
                 </p>
-                <p>
+                <p data-i18n="about.p2">
                     Notre experience nous a permis d'intervenir dans des projets <strong>cles en main</strong> 
                     dans le domaine du froid industriel. Nous disposons d'un departement technique anime par 
                     une equipe d'<strong>ingenieurs et de techniciens qualifies et experimentes</strong>.
                 </p>
-                <p>
+                <p data-i18n="about.p3">
                     En tant que filiale du <strong>Groupe Bayoudh Metals (GBM)</strong>, nous beneficions d'une 
                     infrastructure solide et d'un reseau logistique performant, nous permettant de repondre 
                     efficacement aux besoins de nos clients.
@@ -1329,32 +1584,32 @@
                 <div class="about-features">
                     <div class="about-feature">
                         <i class="fas fa-check-circle"></i>
-                        <span>Expertise Technique</span>
+                        <span data-i18n="about.feat1">Expertise Technique</span>
                     </div>
                     <div class="about-feature">
                         <i class="fas fa-check-circle"></i>
-                        <span>Solutions Sur Mesure</span>
+                        <span data-i18n="about.feat2">Solutions Sur Mesure</span>
                     </div>
                     <div class="about-feature">
                         <i class="fas fa-check-circle"></i>
-                        <span>Service 24/7</span>
+                        <span data-i18n="about.feat3">Service 24/7</span>
                     </div>
                     <div class="about-feature">
                         <i class="fas fa-check-circle"></i>
-                        <span>Garantie Etendue</span>
+                        <span data-i18n="about.feat4">Garantie Etendue</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section - Updated with international expansion -->
+    <!-- Services Section -->
     <section id="services">
         <div class="content-wrapper">
             <div class="section-header fade-in">
-                <span class="section-badge">Nos Services</span>
-                <h2 class="section-title">Notre Expertise a Votre Service</h2>
-                <p class="section-subtitle">
+                <span class="section-badge" data-i18n="services.badge">Nos Services</span>
+                <h2 class="section-title" data-i18n="services.title">Notre Expertise a Votre Service</h2>
+                <p class="section-subtitle" data-i18n="services.subtitle">
                     De l'etude a la maintenance, nous accompagnons chaque etape de votre projet
                 </p>
             </div>
@@ -1363,107 +1618,106 @@
                     <div class="service-icon">
                         <i class="fas fa-drafting-compass"></i>
                     </div>
-                    <h3 class="service-title">Etude & Conception</h3>
-                    <p class="service-description">
+                    <h3 class="service-title" data-i18n="services.s1_title">Etude & Conception</h3>
+                    <p class="service-description" data-i18n="services.s1_desc">
                         Analyse de vos besoins et conception sur mesure de solutions frigorifiques adaptees a vos contraintes.
                     </p>
                     <ul class="service-list">
-                        <li>Etude thermique complete</li>
-                        <li>Dimensionnement precis</li>
-                        <li>Plans d'execution detailles</li>
-                        <li>Devis transparent</li>
+                        <li data-i18n="services.s1_1">Etude thermique complete</li>
+                        <li data-i18n="services.s1_2">Dimensionnement precis</li>
+                        <li data-i18n="services.s1_3">Plans d'execution detailles</li>
+                        <li data-i18n="services.s1_4">Devis transparent</li>
                     </ul>
                 </div>
                 <div class="service-card fade-in">
                     <div class="service-icon">
                         <i class="fas fa-tools"></i>
                     </div>
-                    <h3 class="service-title">Installation</h3>
-                    <p class="service-description">
+                    <h3 class="service-title" data-i18n="services.s2_title">Installation</h3>
+                    <p class="service-description" data-i18n="services.s2_desc">
                         Installation professionnelle de vos equipements par nos techniciens certifies et experimentes.
                     </p>
                     <ul class="service-list">
-                        <li>Montage chambres froides</li>
-                        <li>Installation equipements</li>
-                        <li>Mise en service</li>
-                        <li>Formation utilisateur</li>
+                        <li data-i18n="services.s2_1">Montage chambres froides</li>
+                        <li data-i18n="services.s2_2">Installation equipements</li>
+                        <li data-i18n="services.s2_3">Mise en service</li>
+                        <li data-i18n="services.s2_4">Formation utilisateur</li>
                     </ul>
                 </div>
                 <div class="service-card fade-in">
                     <div class="service-icon">
                         <i class="fas fa-wrench"></i>
                     </div>
-                    <h3 class="service-title">Maintenance Preventive</h3>
-                    <p class="service-description">
+                    <h3 class="service-title" data-i18n="services.s3_title">Maintenance Preventive</h3>
+                    <p class="service-description" data-i18n="services.s3_desc">
                         Contrats de maintenance pour garantir la longevite et l'efficacite de vos installations.
                     </p>
                     <ul class="service-list">
-                        <li>Visites programmees</li>
-                        <li>Controles reguliers</li>
-                        <li>Prevention des pannes</li>
-                        <li>Reporting detaille</li>
+                        <li data-i18n="services.s3_1">Visites programmees</li>
+                        <li data-i18n="services.s3_2">Controles reguliers</li>
+                        <li data-i18n="services.s3_3">Prevention des pannes</li>
+                        <li data-i18n="services.s3_4">Reporting detaille</li>
                     </ul>
                 </div>
                 <div class="service-card fade-in">
                     <div class="service-icon">
                         <i class="fas fa-screwdriver"></i>
                     </div>
-                    <h3 class="service-title">Maintenance Curative</h3>
-                    <p class="service-description">
+                    <h3 class="service-title" data-i18n="services.s4_title">Maintenance Curative</h3>
+                    <p class="service-description" data-i18n="services.s4_desc">
                         Intervention rapide en cas de panne pour minimiser l'impact sur votre activite.
                     </p>
                     <ul class="service-list">
-                        <li>Intervention 24h/24, 7j/7</li>
-                        <li>Diagnostic rapide</li>
-                        <li>Reparation sur site</li>
-                        <li>Pieces de rechange</li>
+                        <li data-i18n="services.s4_1">Intervention 24h/24, 7j/7</li>
+                        <li data-i18n="services.s4_2">Diagnostic rapide</li>
+                        <li data-i18n="services.s4_3">Reparation sur site</li>
+                        <li data-i18n="services.s4_4">Pieces de rechange</li>
                     </ul>
                 </div>
                 <div class="service-card fade-in">
                     <div class="service-icon">
                         <i class="fas fa-snowflake"></i>
                     </div>
-                    <h3 class="service-title">Maintenance Equipements Tiers</h3>
-                    <p class="service-description">
+                    <h3 class="service-title" data-i18n="services.s5_title">Maintenance Equipements Tiers</h3>
+                    <p class="service-description" data-i18n="services.s5_desc">
                         Nous assurons egalement la maintenance des equipements que nous n'avons pas installes.
                     </p>
                     <ul class="service-list">
-                        <li>Toutes marques acceptees</li>
-                        <li>Expertise multi-equipements</li>
-                        <li>Contrats flexibles</li>
-                        <li>Tarifs competitifs</li>
+                        <li data-i18n="services.s5_1">Toutes marques acceptees</li>
+                        <li data-i18n="services.s5_2">Expertise multi-equipements</li>
+                        <li data-i18n="services.s5_3">Contrats flexibles</li>
+                        <li data-i18n="services.s5_4">Tarifs competitifs</li>
                     </ul>
                 </div>
                 <div class="service-card fade-in">
                     <div class="service-icon">
                         <i class="fas fa-globe"></i>
                     </div>
-                    <h3 class="service-title">Export International</h3>
-                    <p class="service-description">
-                       
+                    <h3 class="service-title" data-i18n="services.s6_title">Export International</h3>
+                    <p class="service-description" data-i18n="services.s6_desc">
+                        Expansion internationale avec conformite aux normes globales.
                     </p>
                     <ul class="service-list">
-                        <li>Conformite aux normes</li>
-                        <li>Logistique internationale</li>
-                        <li>Support technique a distance</li>
-                        <li>Formation en ligne</li>
+                        <li data-i18n="services.s6_1">Conformite aux normes</li>
+                        <li data-i18n="services.s6_2">Logistique internationale</li>
+                        <li data-i18n="services.s6_3">Support technique a distance</li>
+                        <li data-i18n="services.s6_4">Formation en ligne</li>
                     </ul>
                     <div class="service-highlight">
-                        
-                        <p>Nous avons deja commence notre phase d'<strong>expansion internationale</strong> en commencant par un projet en <strong>Libye</strong>.</p>
+                        <p data-i18n="services.s6_highlight">Nous avons deja commence notre phase d'<strong>expansion internationale</strong> en commencant par un projet en <strong>Libye</strong>.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Adiabatic Section - Updated with 2 images swapped -->
+    <!-- Adiabatic Section -->
     <section id="adiabatic">
         <div class="content-wrapper">
             <div class="section-header fade-in">
-                <span class="section-badge" style="background: linear-gradient(135deg, var(--success) 0%, #20c997 100%);">Solution Ecologique</span>
-                <h2 class="section-title" style="background: linear-gradient(135deg, var(--success) 0%, #20c997 100%); -webkit-background-clip: text;">Climatisation Adiabatique</h2>
-                <p class="section-subtitle">
+                <span class="section-badge" style="background: linear-gradient(135deg, var(--success) 0%, #20c997 100%);" data-i18n="adiabatic.badge">Solution Ecologique</span>
+                <h2 class="section-title" style="background: linear-gradient(135deg, var(--success) 0%, #20c997 100%); -webkit-background-clip: text;" data-i18n="adiabatic.title">Climatisation Adiabatique</h2>
+                <p class="section-subtitle" data-i18n="adiabatic.subtitle">
                     La solution naturelle et eco-energetique pour le confort thermique industriel
                 </p>
             </div>
@@ -1478,8 +1732,8 @@
                             <i class="fas fa-thermometer-half"></i>
                         </div>
                         <div class="adiabatic-feature-content">
-                            <h4>Reduction de Temperature</h4>
-                            <p>Abaissement de la temperature jusqu'a <strong>8 a 12C</strong> selon les conditions climatiques, creant un environnement de travail optimal.</p>
+                            <h4 data-i18n="adiabatic.f1_title">Reduction de Temperature</h4>
+                            <p data-i18n="adiabatic.f1_desc">Abaissement de la temperature jusqu'a <strong>8 a 12C</strong> selon les conditions climatiques, creant un environnement de travail optimal.</p>
                         </div>
                     </div>
                     <div class="adiabatic-feature fade-in">
@@ -1487,8 +1741,8 @@
                             <i class="fas fa-bolt"></i>
                         </div>
                         <div class="adiabatic-feature-content">
-                            <h4>Economie d'Energie Exceptionnelle</h4>
-                            <p>Jusqu'a <strong>80% d'economie</strong> sur la consommation electrique compare a une climatisation classique. Cinq fois moins de consommation qu'un A/C.</p>
+                            <h4 data-i18n="adiabatic.f2_title">Economie d'Energie Exceptionnelle</h4>
+                            <p data-i18n="adiabatic.f2_desc">Jusqu'a <strong>80% d'economie</strong> sur la consommation electrique compare a une climatisation classique. Cinq fois moins de consommation qu'un A/C.</p>
                         </div>
                     </div>
                     <div class="adiabatic-feature fade-in">
@@ -1496,8 +1750,8 @@
                             <i class="fas fa-wind"></i>
                         </div>
                         <div class="adiabatic-feature-content">
-                            <h4>Air 100% Neuf et Propre</h4>
-                            <p>Fonctionnement en air neuf continu, amelioration de la <strong>qualite de l'air</strong>. Ventilation et renouvellement constants sans particules d'eau.</p>
+                            <h4 data-i18n="adiabatic.f3_title">Air 100% Neuf et Propre</h4>
+                            <p data-i18n="adiabatic.f3_desc">Fonctionnement en air neuf continu, amelioration de la <strong>qualite de l'air</strong>. Ventilation et renouvellement constants sans particules d'eau.</p>
                         </div>
                     </div>
                     <div class="adiabatic-feature fade-in">
@@ -1505,8 +1759,8 @@
                             <i class="fas fa-leaf"></i>
                         </div>
                         <div class="adiabatic-feature-content">
-                            <h4>100% Ecologique</h4>
-                            <p>Technologie <strong>sans fluide frigorigene</strong>, uniquement air et eau. Pas de gaz fluores, respectueuse de l'environnement.</p>
+                            <h4 data-i18n="adiabatic.f4_title">100% Ecologique</h4>
+                            <p data-i18n="adiabatic.f4_desc">Technologie <strong>sans fluide frigorigene</strong>, uniquement air et eau. Pas de gaz fluores, respectueuse de l'environnement.</p>
                         </div>
                     </div>
                     <div class="adiabatic-feature fade-in">
@@ -1514,8 +1768,8 @@
                             <i class="fas fa-tools"></i>
                         </div>
                         <div class="adiabatic-feature-content">
-                            <h4>Maintenance Simplifiee</h4>
-                            <p>Couts d'exploitation reduits et <strong>maintenance simple</strong>. Fonctionnement avec portes et fenetres ouvertes possible.</p>
+                            <h4 data-i18n="adiabatic.f5_title">Maintenance Simplifiee</h4>
+                            <p data-i18n="adiabatic.f5_desc">Couts d'exploitation reduits et <strong>maintenance simple</strong>. Fonctionnement avec portes et fenetres ouvertes possible.</p>
                         </div>
                     </div>
                 </div>
@@ -1523,871 +1777,329 @@
             <div class="comparison-stats">
                 <div class="comparison-card fade-in">
                     <div class="comparison-value energy">-80%</div>
-                    <div class="comparison-label">Consommation electrique vs climatisation classique</div>
+                    <div class="comparison-label" data-i18n="adiabatic.comp1">Consommation electrique vs climatisation classique</div>
                 </div>
                 <div class="comparison-card fade-in">
                     <div class="comparison-value temp">7-20C</div>
-                    <div class="comparison-label">Reduction de temperature selon conditions</div>
+                    <div class="comparison-label" data-i18n="adiabatic.comp2">Reduction de temperature selon conditions</div>
                 </div>
                 <div class="comparison-card fade-in">
                     <div class="comparison-value eco">100%</div>
-                    <div class="comparison-label">Ecologique - Sans gaz frigorigene</div>
+                    <div class="comparison-label" data-i18n="adiabatic.comp3">Ecologique - Sans gaz frigorigene</div>
                 </div>
             </div>
         </div>
     </section>
-<section id="cold-rooms">
-    <div class="content-wrapper">
-        <div class="section-header fade-in">
-            <span class="section-badge" style="background: linear-gradient(135deg, #0066cc 0%, #003d7d 100%);">Solutions Frigorifiques Complètes</span>
-            <h2 class="section-title" style="background: linear-gradient(135deg, #0066cc 0%, #003d7d 100%); -webkit-background-clip: text;">Chambres Frigorifiques & Solutions de Froid</h2>
-            <p class="section-subtitle">
-                Conception, installation et maintenance de tous types d'installations frigorifiques professionnelles
-            </p>
-        </div>
 
-        <!-- Types de Chambres Froides -->
-        <div class="cold-room-types">
-            <h3 class="subsection-title fade-in">Nos Solutions Frigorifiques</h3>
-            <div class="types-grid">
-                <div class="type-card fade-in">
-                    <div class="type-icon positive">
-                        <i class="fas fa-temperature-high"></i>
-                    </div>
-                    <h4>Chambres Froides Positives</h4>
-                    <p class="temp-range"></p>
-                    <p>Conservation de produits frais, fruits et légumes, produits laitiers, boissons. Idéal pour la préservation courte et moyenne durée.</p>
-                </div>
-                
-                <div class="type-card fade-in">
-                    <div class="type-icon negative">
-                        <i class="fas fa-snowflake"></i>
-                    </div>
-                    <h4>Chambres Froides Négatives</h4>
-                    <p class="temp-range"></p>
-                    <p>Congélation et conservation longue durée de viandes, poissons, produits surgelés. Surgélation rapide disponible.</p>
-                </div>
-                
-                <div class="type-card fade-in">
-                    <div class="type-icon tunnel">
-                        <i class="fas fa-wind"></i>
-                    </div>
-                    <h4>Tunnels de Surgélation</h4>
-                    <p class="temp-range"></p>
-                    <p>Surgélation ultra-rapide pour préserver qualité et texture. Flux d'air puissant pour refroidissement instantané.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Caractéristiques Principales -->
-        <div class="adiabatic-grid" style="margin-top: 4rem;">
-            <div class="adiabatic-images-column fade-in">
-                <img src="images/IMG_1257.JPG" alt="Chambre frigorifique" class="adiabatic-image">
-                <img src="images/chambre froid.jpeg" alt="Installation frigorifique" class="adiabatic-image">
-                <img src="images/2.png" alt="Installation frigorifique" class="adiabatic-image">
-            </div>
-            <div class="adiabatic-features">
-                <div class="adiabatic-feature fade-in">
-                    <div class="adiabatic-feature-icon">
-                        <i class="fas fa-thermometer-half"></i>
-                    </div>
-                    <div class="adiabatic-feature-content">
-                        <h4>Contrôle Précis Multi-Zones</h4>
-                        <p>Régulation indépendante dans <strong>chaque zone</strong>. Monitoring en temps réel de la température et de l'humidité pour une conservation optimale.</p>
-                    </div>
-                </div>
-                <div class="adiabatic-feature fade-in">
-                    <div class="adiabatic-feature-icon">
-                        <i class="fas fa-certificate"></i>
-                    </div>
-                    <div class="adiabatic-feature-content">
-                        <h4>Conformité Réglementaire Totale</h4>
-                        <p>Installations conformes aux <strong>normes HACCP et hygiéniques</strong>. Traçabilité complète et certification sanitaire garantie.</p>
-                    </div>
-                </div>
-                <div class="adiabatic-feature fade-in">
-                    <div class="adiabatic-feature-icon">
-                        <i class="fas fa-ruler-combined"></i>
-                    </div>
-                    <div class="adiabatic-feature-content">
-                        <h4>Conception Sur Mesure</h4>
-                        <p>Solutions <strong>personnalisées</strong> selon vos contraintes : espaces disponibles, volumes, flux de travail. Isolation haute performance garantie.</p>
-                    </div>
-                </div>
-                <div class="adiabatic-feature fade-in">
-                    <div class="adiabatic-feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <div class="adiabatic-feature-content">
-                        <h4>Efficacité Énergétique</h4>
-                        <p>Compresseurs <strong>dernière génération</strong> avec récupération de chaleur. Économies substantielles sur vos coûts d'exploitation.</p>
-                    </div>
-                </div>
-                <div class="adiabatic-feature fade-in">
-                    <div class="adiabatic-feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="adiabatic-feature-content">
-                        <h4>Fiabilité & Sécurité</h4>
-                        <p>Systèmes de <strong>sécurité intégrés</strong> : alarmes, détection de pannes, secours automatique. Protection de vos produits garantie 24/7.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Services de Maintenance -->
-        <div class="maintenance-section" style="margin-top: 4rem;">
-            <h3 class="subsection-title fade-in">Services de Maintenance</h3>
-            <div class="maintenance-grid">
-                <div class="maintenance-card fade-in">
-                    <div class="maintenance-icon preventive">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <h4>Maintenance Préventive</h4>
-                    <ul>
-                        <li><i class="fas fa-check"></i> Contrôles périodiques programmés</li>
-                        <li><i class="fas fa-check"></i> Vérification des performances</li>
-                        <li><i class="fas fa-check"></i> Nettoyage et désinfection</li>
-                        <li><i class="fas fa-check"></i> Remplacement préventif des pièces d'usure</li>
-                        <li><i class="fas fa-check"></i> Optimisation énergétique</li>
-                        <li><i class="fas fa-check"></i> Rapports détaillés après intervention</li>
-                    </ul>
-                </div>
-                
-                <div class="maintenance-card fade-in">
-                    <div class="maintenance-icon curative">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                    <h4>Maintenance Curative</h4>
-                    <ul>
-                        <li><i class="fas fa-check"></i> Intervention d'urgence 24/7</li>
-                        <li><i class="fas fa-check"></i> Diagnostic rapide des pannes</li>
-                        <li><i class="fas fa-check"></i> Réparation sur site</li>
-                        <li><i class="fas fa-check"></i> Pièces de rechange en stock</li>
-                        <li><i class="fas fa-check"></i> Remise en service garantie</li>
-                        <li><i class="fas fa-check"></i> Suivi post-intervention</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Statistiques -->
-       
-    </div>
-</section>
-<style>
-    /* Types de Chambres Froides */
-.cold-room-types {
-    margin: 3rem 0;
-}
-
-.subsection-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 2.5rem;
-    color: var(--cogepam-blue);
-}
-
-.types-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.type-card {
-    background: white;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    text-align: center;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.type-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    border-color: var(--cogepam-blue);
-}
-
-.type-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 2rem;
-    color: white;
-}
-
-.type-icon.positive {
-    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-}
-
-.type-icon.negative {
-    background: linear-gradient(135deg, #0066cc 0%, #003d7d 100%);
-}
-
-.type-icon.tunnel {
-    background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
-}
-
-.type-card h4 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-    color: var(--cogepam-blue);
-}
-
-.temp-range {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--cogepam-orange);
-    margin-bottom: 1rem;
-}
-
-.type-card p:last-child {
-    color: #666;
-    line-height: 1.6;
-}
-
-/* Maintenance Section */
-.maintenance-section {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 3rem;
-    border-radius: 20px;
-    margin-top: 4rem;
-}
-
-.maintenance-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2.5rem;
-    margin-top: 2rem;
-}
-
-.maintenance-card {
-    background: white;
-    padding: 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-}
-
-.maintenance-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-}
-
-.maintenance-icon {
-    width: 70px;
-    height: 70px;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 12px;
-    font-size: 1.8rem;
-    color: white;
-}
-
-.maintenance-icon.preventive {
-    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-}
-
-.maintenance-icon.curative {
-    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-}
-
-.maintenance-card h4 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: var(--cogepam-blue);
-}
-
-.maintenance-card ul {
-    list-style: none;
-    padding: 0;
-}
-
-.maintenance-card ul li {
-    padding: 0.7rem 0;
-    color: #555;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    border-bottom: 1px solid #eee;
-}
-
-.maintenance-card ul li:last-child {
-    border-bottom: none;
-}
-
-.maintenance-card ul li i {
-    color: var(--success);
-    font-size: 0.9rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .types-grid,
-    .maintenance-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .subsection-title {
-        font-size: 1.6rem;
-    }
-    
-    .maintenance-section {
-        padding: 2rem 1.5rem;
-    }
-}
-</style>
-    <!-- Partnership Section - Updated market stats -->
-<section id="partnership">
-    <div class="content-wrapper">
-        <div class="section-header fade-in">
-            <span class="section-badge" style="background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);">Collaboration</span>
-            <h2 class="section-title" style="background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%); -webkit-background-clip: text;">Un Partenariat Mutuellement Bénéfique</h2>
-            <p class="section-subtitle">
-                Ce que notre collaboration peut apporter à votre développement en Tunisie et en Afrique du Nord
-            </p>
-        </div>
-
-        <!-- Graphique des installations récentes -->
-        <div class="installations-chart fade-in">
-            <h3 class="chart-title">
-                <i class="fas fa-chart-line"></i> 
-                Notre Croissance - 2ème Semestre 2025
-            </h3>
-            <p class="chart-subtitle"></p>
-            
-            <div class="line-chart-container">
-                <canvas id="installationsChart"></canvas>
-            </div>
-            
-            <div class="chart-stats-grid">
-                <div class="chart-stat-card">
-                    <div class="stat-icon"><i class="fas fa-rocket"></i></div>
-                    <div class="stat-value">117</div>
-                    <div class="stat-label">Appareils installés</div>
-                </div>
-                <div class="chart-stat-card">
-                    <div class="stat-icon"><i class="fas fa-building"></i></div>
-                    <div class="stat-value">9</div>
-                    <div class="stat-label">Clients différents</div>
-                </div>
-                <div class="chart-stat-card">
-                    <div class="stat-icon"><i class="fas fa-industry"></i></div>
-                    <div class="stat-value">+5</div>
-                    <div class="stat-label">Secteurs d'activités</div>
-                </div>
-                <div class="chart-stat-card">
-                    <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
-                    <div class="stat-value">19.5</div>
-                    <div class="stat-label">Appareils / mois en moyenne</div>
-                </div>
-            </div>
-            
-            <div class="chart-legend">
-                <div class="legend-item">
-                    <i class="fas fa-check-circle"></i>
-                    <span>Installations réparties sur 6 mois</span>
-                </div>
-                <div class="legend-item">
-                    <i class="fas fa-tools"></i>
-                    <span>Maintenance préventive & curative assurée</span>
-                </div>
-                <div class="legend-item">
-                    <i class="fas fa-trophy"></i>
-                    <span>100% de clients satisfaits</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="partnership-grid">
-            <div class="partnership-content fade-in">
-                <h3>Le Potentiel du Marché Tunisien</h3>
-                <p>
-                    La Tunisie représente une <strong>opportunité exceptionnelle</strong> pour les solutions 
-                    de climatisation adiabatique. Avec un climat méditerranéen chaud et une industrie en 
-                    pleine croissance, la demande pour des solutions de refroidissement économiques et 
-                    écologiques ne cesse d'augmenter.
+    <!-- Cold Rooms Section - Enhanced -->
+    <section id="cold-rooms">
+        <div class="content-wrapper">
+            <div class="section-header fade-in">
+                <span class="section-badge" style="background: linear-gradient(135deg, #0066cc 0%, #003d7d 100%);" data-i18n="cold.badge">Solutions Frigorifiques Completes</span>
+                <h2 class="section-title" style="background: linear-gradient(135deg, #0066cc 0%, #003d7d 100%); -webkit-background-clip: text;" data-i18n="cold.title">Chambres Frigorifiques & Solutions de Froid</h2>
+                <p class="section-subtitle" data-i18n="cold.subtitle">
+                    Conception, installation et maintenance de tous types d'installations frigorifiques professionnelles
                 </p>
-                <p>
-                    En tant que filiale du <strong>Groupe Bayoudh Metals (GBM)</strong>, COGEPAM dispose d'une 
-                    infrastructure solide, d'une expertise technique reconnue et d'un réseau de distribution 
-                    établi sur tout le territoire tunisien.
+            </div>
+
+            <!-- Types de Chambres Froides -->
+            <div class="cold-room-types">
+                <h3 class="subsection-title fade-in" data-i18n="cold.types_title">Nos Solutions Frigorifiques</h3>
+                <div class="types-grid">
+                    <div class="type-card fade-in">
+                        <div class="type-icon positive">
+                            <i class="fas fa-temperature-high"></i>
+                        </div>
+                        <h4 data-i18n="cold.type1">Chambres Froides Positives</h4>
+                        <p data-i18n="cold.type1_desc">Conservation de produits frais, fruits et legumes, produits laitiers, boissons. Ideal pour la preservation courte et moyenne duree.</p>
+                    </div>
+                    
+                    <div class="type-card fade-in">
+                        <div class="type-icon negative">
+                            <i class="fas fa-snowflake"></i>
+                        </div>
+                        <h4 data-i18n="cold.type2">Chambres Froides Negatives</h4>
+                        <p data-i18n="cold.type2_desc">Congelation et conservation longue duree de viandes, poissons, produits surgeles. Surgeletion rapide disponible.</p>
+                    </div>
+                    
+                    <div class="type-card fade-in">
+                        <div class="type-icon tunnel">
+                            <i class="fas fa-wind"></i>
+                        </div>
+                        <h4 data-i18n="cold.type3">Tunnels de Surgeletion</h4>
+                        <p data-i18n="cold.type3_desc">Surgeletion ultra-rapide pour preserver qualite et texture. Flux d'air puissant pour refroidissement instantane.</p>
+                    </div>
+
+                    <div class="type-card fade-in">
+                        <div class="type-icon modular">
+                            <i class="fas fa-cubes"></i>
+                        </div>
+                        <h4 data-i18n="cold.type4">Chambres Modulaires</h4>
+                        <p data-i18n="cold.type4_desc">Solutions flexibles et evolutives, facilement demontables et transportables. Installation rapide et configuration sur mesure.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caracteristiques Principales -->
+            <div class="adiabatic-grid" style="margin-top: 4rem;">
+                <div class="adiabatic-images-column fade-in">
+                    <img src="images/IMG_1257.JPG" alt="Chambre frigorifique" class="adiabatic-image">
+                    <img src="images/chambre froid.jpeg" alt="Installation frigorifique" class="adiabatic-image">
+                    <img src="images/2.png" alt="Installation frigorifique" class="adiabatic-image">
+                </div>
+                <div class="adiabatic-features">
+                    <div class="adiabatic-feature fade-in">
+                        <div class="adiabatic-feature-icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <div class="adiabatic-feature-content">
+                            <h4 data-i18n="cold.f1_title">Controle Precis Multi-Zones</h4>
+                            <p data-i18n="cold.f1_desc">Regulation independante dans <strong>chaque zone</strong>. Monitoring en temps reel de la temperature et de l'humidite pour une conservation optimale.</p>
+                        </div>
+                    </div>
+                    <div class="adiabatic-feature fade-in">
+                        <div class="adiabatic-feature-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <div class="adiabatic-feature-content">
+                            <h4 data-i18n="cold.f2_title">Conformite Reglementaire Totale</h4>
+                            <p data-i18n="cold.f2_desc">Installations conformes aux <strong>normes HACCP et hygieniques</strong>. Tracabilite complete et certification sanitaire garantie.</p>
+                        </div>
+                    </div>
+                    <div class="adiabatic-feature fade-in">
+                        <div class="adiabatic-feature-icon">
+                            <i class="fas fa-ruler-combined"></i>
+                        </div>
+                        <div class="adiabatic-feature-content">
+                            <h4 data-i18n="cold.f3_title">Conception Sur Mesure</h4>
+                            <p data-i18n="cold.f3_desc">Solutions <strong>personnalisees</strong> selon vos contraintes : espaces disponibles, volumes, flux de travail. Isolation haute performance garantie.</p>
+                        </div>
+                    </div>
+                    <div class="adiabatic-feature fade-in">
+                        <div class="adiabatic-feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="adiabatic-feature-content">
+                            <h4 data-i18n="cold.f4_title">Efficacite Energetique</h4>
+                            <p data-i18n="cold.f4_desc">Compresseurs <strong>derniere generation</strong> avec recuperation de chaleur. Economies substantielles sur vos couts d'exploitation.</p>
+                        </div>
+                    </div>
+                    <div class="adiabatic-feature fade-in">
+                        <div class="adiabatic-feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="adiabatic-feature-content">
+                            <h4 data-i18n="cold.f5_title">Fiabilite & Securite</h4>
+                            <p data-i18n="cold.f5_desc">Systemes de <strong>securite integres</strong> : alarmes, detection de pannes, secours automatique. Protection de vos produits garantie 24/7.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Services de Maintenance -->
+            <div class="maintenance-section" style="margin-top: 4rem;">
+                <h3 class="subsection-title fade-in" data-i18n="cold.maint_title">Services de Maintenance</h3>
+                <div class="maintenance-grid">
+                    <div class="maintenance-card fade-in">
+                        <div class="maintenance-icon preventive">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h4 data-i18n="cold.maint1_title">Maintenance Preventive</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint1_1">Controles periodiques programmes</span></li>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint1_2">Verification des performances</span></li>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint1_3">Nettoyage et desinfection</span></li>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint1_4">Remplacement preventif des pieces d'usure</span></li>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint1_5">Optimisation energetique</span></li>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint1_6">Rapports detailles apres intervention</span></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="maintenance-card fade-in">
+                        <div class="maintenance-icon curative">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h4 data-i18n="cold.maint2_title">Maintenance Curative</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint2_1">Intervention d'urgence 24/7</span></li>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint2_2">Diagnostic rapide des pannes</span></li>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint2_3">Reparation sur site</span></li>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint2_4">Pieces de rechange en stock</span></li>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint2_5">Remise en service garantie</span></li>
+                            <li><i class="fas fa-check"></i> <span data-i18n="cold.maint2_6">Suivi post-intervention</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnership Section with Dual Charts -->
+    <section id="partnership">
+        <div class="content-wrapper">
+            <div class="section-header fade-in">
+                <span class="section-badge" style="background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);" data-i18n="partner.badge">Collaboration</span>
+                <h2 class="section-title" style="background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%); -webkit-background-clip: text;" data-i18n="partner.title">Un Partenariat Mutuellement Benefique</h2>
+                <p class="section-subtitle" data-i18n="partner.subtitle">
+                    Ce que notre collaboration peut apporter a votre developpement en Tunisie et en Afrique du Nord
                 </p>
-                
-                <div class="market-potential">
-                    <h4><i class="fas fa-chart-line"></i> Potentiel de Marché</h4>
-                    <div class="market-stats">
-                        <div class="market-stat">
-                            <div class="market-stat-number">40°C+</div>
-                            <div class="market-stat-label">Températures Estivales</div>
+            </div>
+
+            <div class="partnership-grid">
+                <div class="partnership-left fade-in">
+                    <!-- Chart 1: Adiabatic Installations -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-chart-line" style="color: var(--cogepam-blue);"></i> <span data-i18n="partner.chart1_title">Croissance des Installations Adiabatiques</span></h3>
+                            <p data-i18n="partner.chart1_subtitle">Evolution des appareils adiabatiques installes</p>
                         </div>
-                        <div class="market-stat">
-                            <div class="market-stat-number">300+</div>
-                            <div class="market-stat-label">Industries Agroalimentaires</div>
+                        <div class="chart-wrapper">
+                            <canvas id="adiabaticChart"></canvas>
                         </div>
-                        <div class="market-stat">
-                            <div class="market-stat-number">Grand</div>
-                            <div class="market-stat-label">Marge de Progression</div>
+                        <div class="chart-stats-grid">
+                            <div class="chart-stat-card">
+                                <div class="chart-stat-value">117</div>
+                                <div class="chart-stat-label" data-i18n="partner.stat1">Appareils installes</div>
+                            </div>
+                            <div class="chart-stat-card">
+                                <div class="chart-stat-value">9</div>
+                                <div class="chart-stat-label" data-i18n="partner.stat2">Clients differents</div>
+                            </div>
+                            <div class="chart-stat-card">
+                                <div class="chart-stat-value">+5</div>
+                                <div class="chart-stat-label" data-i18n="partner.stat3">Secteurs d'activites</div>
+                            </div>
+                            <div class="chart-stat-card">
+                                <div class="chart-stat-value">19.5</div>
+                                <div class="chart-stat-label" data-i18n="partner.stat4">Appareils/mois moyenne</div>
+                            </div>
                         </div>
-                        <div class="market-stat">
-                            <div class="market-stat-number">Stratégique</div>
-                            <div class="market-stat-label">Positionnement Géographique</div>
+                    </div>
+
+                    <!-- Chart 2: Cold Rooms -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-snowflake" style="color: var(--cogepam-blue);"></i> <span data-i18n="partner.chart2_title">Chambres Frigorifiques - 2eme Semestre 2025</span></h3>
+                            <p data-i18n="partner.chart2_subtitle">Realisations et chiffre d'affaires</p>
+                        </div>
+                        <div class="chart-wrapper">
+                            <canvas id="coldRoomsChart"></canvas>
+                        </div>
+                        <div class="chart-stats-grid">
+                            <div class="chart-stat-card">
+                                <div class="chart-stat-value">16</div>
+                                <div class="chart-stat-label" data-i18n="partner.stat5">Chambres installees</div>
+                            </div>
+                            <div class="chart-stat-card">
+                                <div class="chart-stat-value">2M</div>
+                                <div class="chart-stat-label" data-i18n="partner.stat6">TND Chiffre d'affaires</div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="partnership-benefits">
-                    <div class="partnership-benefit">
-                        <i class="fas fa-network-wired"></i>
-                        <span>Réseau de distribution national établi</span>
+                <div class="partnership-right fade-in">
+                    <div class="partnership-card">
+                        <i class="fas fa-handshake partnership-card-icon"></i>
+                        <h3 class="partnership-card-title" data-i18n="partner.card1_title">Construisons l'Avenir Ensemble</h3>
+                        <p class="partnership-card-text" data-i18n="partner.card1_text">
+                            Votre technologie innovante associee a notre expertise locale 
+                            peut creer une synergie puissante pour conquerir le marche tunisien 
+                            et le marche nord-africain. Le potentiel est immense.
+                        </p>
                     </div>
-                    <div class="partnership-benefit">
-                        <i class="fas fa-users"></i>
-                        <span>100% de clients satisfaits</span>
+
+                    <div class="partnership-benefits">
+                        <div class="partnership-benefit">
+                            <i class="fas fa-network-wired"></i>
+                            <span data-i18n="partner.ben1">Reseau de distribution national etabli</span>
+                        </div>
+                        <div class="partnership-benefit">
+                            <i class="fas fa-users"></i>
+                            <span data-i18n="partner.ben2">100% de clients satisfaits</span>
+                        </div>
+                        <div class="partnership-benefit">
+                            <i class="fas fa-award"></i>
+                            <span data-i18n="partner.ben3">Expertise technique certifiee</span>
+                        </div>
+                        <div class="partnership-benefit">
+                            <i class="fas fa-headset"></i>
+                            <span data-i18n="partner.ben4">Service apres-vente professionnel</span>
+                        </div>
+                        <div class="partnership-benefit">
+                            <i class="fas fa-cogs"></i>
+                            <span data-i18n="partner.ben5">Capacite de stockage optimisee</span>
+                        </div>
+                        <div class="partnership-benefit">
+                            <i class="fas fa-globe"></i>
+                            <span data-i18n="partner.ben6">Expansion internationale (Libye)</span>
+                        </div>
                     </div>
-                    <div class="partnership-benefit">
-                        <i class="fas fa-award"></i>
-                        <span>Expertise technique reconnue et certifiée</span>
-                    </div>
-                    <div class="partnership-benefit">
-                        <i class="fas fa-headset"></i>
-                        <span>Service après-vente professionnel et réactif</span>
-                    </div>
-                    <div class="partnership-benefit">
-                        <i class="fas fa-cogs"></i>
-                        <span>Capacité de stockage et logistique optimisée</span>
-                    </div>
-                    <div class="partnership-benefit">
-                        <i class="fas fa-globe"></i>
-                        <span>Expansion internationale en cours (Libye et plus)</span>
+
+                    <div class="partnership-card" style="margin-top: 2rem;">
+                        <i class="fas fa-chart-line partnership-card-icon"></i>
+                        <h3 class="partnership-card-title" data-i18n="partner.card2_title">Pipeline Commercial Actif</h3>
+                        <p class="partnership-card-text" data-i18n="partner.card2_text">
+                            Nous sommes actuellement en negociation avancee 
+                            avec 4 nouveaux clients majeurs, representant +50 appareils 
+                            a installer dans les 3 prochains mois.
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="partnership-visual fade-in">
-                <div class="partnership-card">
-                    <i class="fas fa-handshake partnership-card-icon"></i>
-                    <h3 class="partnership-card-title">Construisons l'Avenir Ensemble</h3>
-                    <p class="partnership-card-text">
-                        Votre technologie innovante associée à notre expertise locale 
-                        peut créer une synergie puissante pour conquérir le marché tunisien 
-                        et le marché nord-africain. Le potentiel est immense.
-                    </p>
-                </div>
-            </div>
-            
-<div class="partnership-visual fade-in">
-                <div class="partnership-card">
-                    <i class="fas fa-chart-line partnership-card-icon"></i>
-                    <h3 class="partnership-card-title">Pipeline Commercial Actif</h3>
-                    <p class="partnership-card-text">
-                        Nous sommes actuellement en négociation avancée 
-                        avec 4 nouveaux clients majeurs, représentant +50 appareils 
-                        à installer dans les 3 prochains mois.
-                    </p>
-                </div>
-            </div>        
-</div>
-    </div>
-</section>
+        </div>
+    </section>
 
-<style>
-/* ============================================
-   GRAPHIQUE DES INSTALLATIONS
-   ============================================ */
-
-.installations-chart {
-    background: white;
-    padding: 3rem;
-    border-radius: 20px;
-    box-shadow: 0 4px 30px rgba(0,0,0,0.1);
-    margin-bottom: 4rem;
-}
-
-.chart-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--cogepam-blue);
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.chart-title i {
-    color: var(--cogepam-orange);
-}
-
-.chart-subtitle {
-    text-align: center;
-    font-size: 1.1rem;
-    color: #666;
-    margin-bottom: 3rem;
-    font-style: italic;
-}
-
-.line-chart-container {
-    height: 450px;
-    padding: 2rem;
-    background: linear-gradient(to bottom, #f8f9fa 0%, white 100%);
-    border-radius: 12px;
-    margin-bottom: 3rem;
-}
-
-.chart-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2.5rem;
-}
-
-.chart-stat-card {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 1.5rem;
-    border-radius: 12px;
-    text-align: center;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-}
-
-.chart-stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    border-color: var(--cogepam-blue);
-}
-
-.stat-icon {
-    width: 50px;
-    height: 50px;
-    margin: 0 auto 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--cogepam-blue);
-    color: white;
-    border-radius: 50%;
-    font-size: 1.5rem;
-}
-
-.chart-stat-card:nth-child(2) .stat-icon {
-    background: var(--cogepam-orange);
-}
-
-.chart-stat-card:nth-child(3) .stat-icon {
-    background: var(--success);
-}
-
-.chart-stat-card:nth-child(4) .stat-icon {
-    background: var(--gold);
-}
-
-.stat-value {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--cogepam-blue);
-    margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    font-size: 0.95rem;
-    color: #666;
-    font-weight: 500;
-}
-
-.chart-legend {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    flex-wrap: wrap;
-    padding-top: 2rem;
-    border-top: 2px solid #e9ecef;
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-size: 1rem;
-    color: #555;
-}
-
-.legend-item i {
-    color: var(--success);
-    font-size: 1.1rem;
-}
-
-/* Responsive */
-@media (max-width: 968px) {
-    .installations-chart {
-        padding: 2rem 1.5rem;
-    }
-    
-    .line-chart-container {
-        height: 350px;
-        padding: 1rem;
-    }
-    
-    .chart-title {
-        font-size: 1.6rem;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-    
-    .chart-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .chart-legend {
-        gap: 1.5rem;
-    }
-}
-
-@media (max-width: 576px) {
-    .line-chart-container {
-        height: 300px;
-    }
-    
-    .chart-stats-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .stat-value {
-        font-size: 2rem;
-    }
-    
-    .chart-legend {
-        flex-direction: column;
-        gap: 1rem;
-    }
-}
-</style>
-
-<!-- Chart.js Library -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-
-<script>
-// ============================================
-// GRAPHIQUE DES INSTALLATIONS - CHART.JS
-// ============================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    const ctx = document.getElementById('installationsChart');
-    
-    if (ctx) {
-        // Données des installations par mois
-        const data = {
-            labels: ['Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-            datasets: [{
-                label: 'Nombre cumulé d\'appareils installés',
-                data: [15, 32, 48, 71, 95, 117], // Progression cumulative
-                borderColor: '#0066cc',
-                backgroundColor: 'rgba(0, 102, 204, 0.1)',
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4, // Courbe lisse
-                pointRadius: 6,
-                pointBackgroundColor: '#0066cc',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 3,
-                pointHoverRadius: 8,
-                pointHoverBackgroundColor: '#ff6b35',
-                pointHoverBorderColor: '#fff',
-                pointHoverBorderWidth: 3
-            },
-            {
-                label: 'Moyennes mensuelles',
-                data: [15, 17, 16, 23, 24, 22], // Installations par mois
-                borderColor: '#ff6b35',
-                backgroundColor: 'rgba(255, 107, 53, 0.1)',
-                borderWidth: 2,
-                borderDash: [5, 5],
-                fill: true,
-                tension: 0.4,
-                pointRadius: 5,
-                pointBackgroundColor: '#ff6b35',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2,
-                pointHoverRadius: 7
-            }]
-        };
-
-        const config = {
-            type: 'line',
-            data: data,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top',
-                        labels: {
-                            usePointStyle: true,
-                            padding: 20,
-                            font: {
-                                size: 14,
-                                weight: '600'
-                            }
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        titleFont: {
-                            size: 16,
-                            weight: 'bold'
-                        },
-                        bodyFont: {
-                            size: 14
-                        },
-                        padding: 12,
-                        cornerRadius: 8,
-                        displayColors: true,
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                label += context.parsed.y + ' appareils';
-                                return label;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Nombre d\'appareils',
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            }
-                        },
-                        ticks: {
-                            font: {
-                                size: 12
-                            },
-                            callback: function(value) {
-                                return value + ' app.';
-                            }
-                        },
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: '2ème Semestre 2025',
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            }
-                        },
-                        ticks: {
-                            font: {
-                                size: 12
-                            }
-                        },
-                        grid: {
-                            display: false
-                        }
-                    }
-                },
-                interaction: {
-                    intersect: false,
-                    mode: 'index'
-                },
-                animation: {
-                    duration: 2000,
-                    easing: 'easeInOutQuart'
-                }
-            }
-        };
-
-        new Chart(ctx, config);
-    }
-});
-</script>
-<style>
-    .slide-badge {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: var(--cogepam-blue);
-    color: white;
-    padding: 0.6rem 1.2rem;
-    border-radius: 25px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-}
-</style>
-    <!-- 3D Image Gallery Slider Section -->
+    <!-- Gallery Section -->
     <section id="gallery" class="slider-section">
         <div class="content-wrapper">
             <div class="section-header fade-in" style="color: white; margin-bottom: 4rem;">
-                <span class="section-badge" style="background: white; color: var(--cogepam-blue);">Galerie</span>
-                <h2 class="section-title" style="color: white; -webkit-text-fill-color: white;">Nos Interventions</h2>
-                <p style="color: rgba(255,255,255,0.9);">Decouvrez nos interventions a travers la Tunisie.</p>
+                <span class="section-badge" style="background: white; color: var(--cogepam-blue);" data-i18n="gallery.badge">Galerie</span>
+                <h2 class="section-title" style="color: white; -webkit-text-fill-color: white;" data-i18n="gallery.title">Nos Interventions</h2>
+                <p style="color: rgba(255,255,255,0.9);" data-i18n="gallery.subtitle">Decouvrez nos interventions a travers la Tunisie.</p>
             </div>
             
             <div class="slider-container">
                 <div class="slider-3d" id="slider3d">
                     <div class="slider-slide active" data-index="0">
+                        <span class="slide-badge" data-i18n="gallery.before">Avant intervention</span>
                         <img src="images/avant.PNG" alt="Realisation COGEPAM 1">
-                        <div class="slide-badge">Avant intervention</div>
                     </div>
                     <div class="slider-slide next" data-index="1">
+                        <span class="slide-badge" data-i18n="gallery.before">Avant intervention</span>
                         <img src="images/whatsapp2.jpg" alt="Realisation COGEPAM 2">
-                        <div class="slide-badge">Avant intervention</div>
                     </div>
                     <div class="slider-slide hidden" data-index="2">
+                        <span class="slide-badge" data-i18n="gallery.before">Avant intervention</span>
                         <img src="images/whatsapp3.jpg" alt="Realisation COGEPAM 3">
-                        <div class="slide-badge">Avant intervention</div>
-                    </div>
-                    <div class="slider-slide hidden" data-index="2">
-                        <img src="images/Picture1.jpg" alt="Realisation COGEPAM 3">
-                        <div class="slide-badge">En intervention</div>
-                    </div>
-                    <div class="slider-slide hidden" data-index="2">
-                        <img src="images/apres.PNG" alt="Realisation COGEPAM 3">
-                        <div class="slide-badge">Aprés intervention</div>
-                    </div>
-                    <div class="slider-slide hidden" data-index="2">
-                        <img src="images/charpente avant.PNG" alt="Realisation COGEPAM 3">
-                        <div class="slide-badge">Avant intervention</div>
-                    </div>
-                    <div class="slider-slide hidden" data-index="2">
-                        <img src="images/charpente apres.PNG" alt="Realisation COGEPAM 3">
-                        <div class="slide-badge">Aprés intervention</div>
                     </div>
                     <div class="slider-slide hidden" data-index="3">
-                        <img src="images/whatsapp4.jpg" alt="Realisation COGEPAM 4">
-                        <div class="slide-badge">Avant intervention</div>
+                        <span class="slide-badge" data-i18n="gallery.during">En intervention</span>
+                        <img src="images/Picture1.jpg" alt="Realisation COGEPAM 4">
                     </div>
-                    <div class="slider-slide prev" data-index="4">
-                        <img src="images/whatsapp5.jpg" alt="Realisation COGEPAM 5">
-                        <div class="slide-badge">Avant intervention</div>
+                    <div class="slider-slide hidden" data-index="4">
+                        <span class="slide-badge" data-i18n="gallery.after">Apres intervention</span>
+                        <img src="images/apres.PNG" alt="Realisation COGEPAM 5">
                     </div>
-                    <div class="slider-slide prev" data-index="4">
-                        <img src="images/boite electrique.PNG" alt="Realisation COGEPAM 5">
-                        <div class="slide-badge">Aprés intervention</div>
+                    <div class="slider-slide hidden" data-index="5">
+                        <span class="slide-badge" data-i18n="gallery.before">Avant intervention</span>
+                        <img src="images/charpente avant.PNG" alt="Realisation COGEPAM 6">
+                    </div>
+                    <div class="slider-slide hidden" data-index="6">
+                        <span class="slide-badge" data-i18n="gallery.after">Apres intervention</span>
+                        <img src="images/charpente apres.PNG" alt="Realisation COGEPAM 7">
+                    </div>
+                    <div class="slider-slide prev" data-index="7">
+                        <span class="slide-badge" data-i18n="gallery.before">Avant intervention</span>
+                        <img src="images/whatsapp4.jpg" alt="Realisation COGEPAM 8">
+                    </div>
+                    <div class="slider-slide prev" data-index="8">
+                        <span class="slide-badge" data-i18n="gallery.before">Avant intervention</span>
+                        <img src="images/whatsapp5.jpg" alt="Realisation COGEPAM 9">
+                    </div>
+                    <div class="slider-slide prev" data-index="9">
+                        <span class="slide-badge" data-i18n="gallery.after">Apres intervention</span>
+                        <img src="images/boite electrique.PNG" alt="Realisation COGEPAM 10">
                     </div>
                 </div>
                 
@@ -2402,18 +2114,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     <button class="slider-dot" data-index="2"></button>
                     <button class="slider-dot" data-index="3"></button>
                     <button class="slider-dot" data-index="4"></button>
+                    <button class="slider-dot" data-index="5"></button>
+                    <button class="slider-dot" data-index="6"></button>
+                    <button class="slider-dot" data-index="7"></button>
+                    <button class="slider-dot" data-index="8"></button>
+                    <button class="slider-dot" data-index="9"></button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- References Section - Updated without project details -->
+    <!-- References Section -->
     <section id="references">
         <div class="content-wrapper">
             <div class="section-header fade-in">
-                <span class="section-badge">Nos References</span>
-                <h2 class="section-title">Ils Nous Font Confiance</h2>
-                <p class="section-subtitle">
+                <span class="section-badge" data-i18n="ref.badge">Nos References</span>
+                <h2 class="section-title" data-i18n="ref.title">Ils Nous Font Confiance</h2>
+                <p class="section-subtitle" data-i18n="ref.subtitle">
                     Un portefeuille clients diversifie temoignant de notre expertise
                 </p>
             </div>
@@ -2478,26 +2195,30 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
     </section>
 
-    <!-- Footer - Updated to 2026 -->
+    <!-- Footer with Map -->
     <footer>
         <div class="footer-content">
             <div class="footer-section">
                 <h3><i class="fas fa-snowflake"></i> COGEPAM</h3>
-                <p>Expert en refrigeration industrielle et commerciale. Filiale du Groupe Bayoudh Metals.</p>
-                <p><strong>Notre mission :</strong> Transformer l'ordinaire en extraordinaire a travers l'excellence technique et l'innovation.</p>
+                <p data-i18n="footer.desc">Expert en refrigeration industrielle et commerciale. Filiale du Groupe Bayoudh Metals.</p>
+                <p><strong data-i18n="footer.mission">Notre mission :</strong> <span data-i18n="footer.mission_text">Transformer l'ordinaire en extraordinaire a travers l'excellence technique et l'innovation.</span></p>
+                
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1620.0189822866064!2d10.75082145631312!3d35.70068335980887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13020d003f2272af%3A0xcd626ff350ad4038!2sCOGEPAM!5e0!3m2!1sfr!2stn!4v1770388392294!5m2!1sfr!2stn" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
             </div>
             <div class="footer-section">
-                <h3>Nos Services</h3>
+                <h3 data-i18n="footer.services">Nos Services</h3>
                 <ul class="footer-links">
-                    <li><i class="fas fa-check"></i> Etude & Conception</li>
-                    <li><i class="fas fa-check"></i> Installation</li>
-                    <li><i class="fas fa-check"></i> Maintenance Preventive</li>
-                    <li><i class="fas fa-check"></i> Maintenance Curative</li>
-                    <li><i class="fas fa-check"></i> Export International</li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="footer.s1">Etude & Conception</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="footer.s2">Installation</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="footer.s3">Maintenance Preventive</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="footer.s4">Maintenance Curative</span></li>
+                    <li><i class="fas fa-check"></i> <span data-i18n="footer.s5">Export International</span></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h3>Contact</h3>
+                <h3 data-i18n="footer.contact">Contact</h3>
                 <ul class="footer-links">
                     <li><i class="fas fa-map-marker-alt"></i> Z.I Menzel Harb, Monastir, Tunisie</li>
                     <li><i class="fas fa-phone"></i> +216 29 07 73 42</li>
@@ -2509,32 +2230,13 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
        <div class="copyright">
-    <p>&copy; 2026 COGEPAM - Comptoir General de Panneaux et de Metaux. Tous droits reserves.</p>
-    <p style="margin-top: 10px;">Filiale du Groupe Bayoudh Metals (GBM) | Transformons l'ordinaire en extraordinaire</p>
-    <p style="margin-top: 10px;">
-        Designed by 
-        <a href="https://github.com/HAMMOUDAmustaphaahmed" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           style="color: #00d4ff; 
-                  text-decoration: none; 
-                  font-weight: 600; 
-                  letter-spacing: 1px;
-                  transition: all 0.3s ease;
-                  padding: 2px 8px;
-                  border-bottom: 2px solid transparent;">
-            AMH
-        </a>
-    </p>
-</div>
-<style>
-    .copyright a:hover {
-    color: #fff;
-    border-bottom: 2px solid #00d4ff;
-    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-    transform: translateY(-2px);
-}
-</style>
+            <p>&copy; 2026 COGEPAM - <span data-i18n="footer.rights">Tous droits reserves.</span></p>
+            <p style="margin-top: 10px;" data-i18n="footer.subsidiary">Filiale du Groupe Bayoudh Metals (GBM) | Transformons l'ordinaire en extraordinaire</p>
+            <p style="margin-top: 10px;">
+                <span data-i18n="footer.designed">Designed by</span> 
+                <a href="https://github.com/HAMMOUDAmustaphaahmed" target="_blank" rel="noopener noreferrer" style="color: #00d4ff; text-decoration: none; font-weight: 600;">AMH</a>
+            </p>
+        </div>
     </footer>
 
     <script>
@@ -2561,7 +2263,6 @@ document.addEventListener('DOMContentLoaded', function() {
         menuClose.addEventListener('click', closeMenu);
         navOverlay.addEventListener('click', closeMenu);
 
-        // Close menu when clicking on a link
         navLinkItems.forEach(link => {
             link.addEventListener('click', () => {
                 closeMenu();
@@ -2571,7 +2272,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Navigation Active State
         const sections = document.querySelectorAll('section');
 
-        // Smooth scroll for navigation
         navLinkItems.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -2588,7 +2288,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Update active nav on scroll
         window.addEventListener('scroll', () => {
             let current = '';
             sections.forEach(section => {
@@ -2607,7 +2306,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Fade In Animation on Scroll
+        // Fade In Animation
         const fadeElements = document.querySelectorAll('.fade-in');
         const fadeObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -2619,7 +2318,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         fadeElements.forEach(el => fadeObserver.observe(el));
 
-        // 3D Slider Functionality
+        // 3D Slider
         const slider = document.getElementById('slider3d');
         const slides = document.querySelectorAll('.slider-slide');
         const dots = document.querySelectorAll('.slider-dot');
@@ -2668,31 +2367,176 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Auto-play slider
-        let autoPlay = setInterval(nextSlide, 5000);
+        setInterval(nextSlide, 5000);
 
-        // Pause auto-play on hover
-        slider.addEventListener('mouseenter', () => clearInterval(autoPlay));
-        slider.addEventListener('mouseleave', () => {
-            autoPlay = setInterval(nextSlide, 5000);
-        });
+        // Language Switcher
+        const translations = {
+            fr: {
+                nav: { home: "Accueil", about: "Qui Sommes-nous", services: "Services", numbers: "Chiffres", adiabatic: "Adiabatique", cold: "Frigorifique", partnership: "Collaboration", gallery: "Galerie", references: "Références" },
+                hero: { title: "Comptoir General de Panneaux et de Metaux", subtitle: "Filiale du Groupe Bayoudh Metals (GBM)", description: "Expert en solutions de refrigeration industrielle et commerciale. Nous concevons et realisons des installations cles en main pour l'industrie alimentaire, avec un engagement total vers l'excellence technique et la satisfaction client.", cta1: "Decouvrir COGEPAM", cta2: "Nous Contacter" },
+                stats: { badge: "Nos Chiffres", title: "COGEPAM en Chiffres", subtitle: "Des chiffres qui temoignent de notre engagement et de notre expertise", stat1: "Clients Satisfaits", sub1: "Engagement qualite garanti", stat2_num: "Plus de 10", stat2: "Ans d'Experience", sub2: "Expertise confirmee dans le froid", stat3_num: "Plus de 15", stat3: "Secteurs d'Activite", sub3: "Couverture nationale complete" },
+                about: { badge: "Qui Sommes-nous", title: "Notre Histoire & Notre Expertise", subtitle: "De la vision a la realite, COGEPAM s'est impose comme reference du froid industriel en Tunisie", heading: "Une Entreprise, Une Vision", p1: "COGEPAM (Comptoir General de Panneaux et de Metaux) est une entreprise specialisee dans le domaine de la refrigeration industrielle et commerciale. Notre activite repose sur le developpement de solutions integrales pour l'industrie alimentaire.", p2: "Notre experience nous a permis d'intervenir dans des projets cles en main dans le domaine du froid industriel. Nous disposons d'un departement technique anime par une equipe d'ingenieurs et de techniciens qualifies et experimentes.", p3: "En tant que filiale du Groupe Bayoudh Metals (GBM), nous beneficions d'une infrastructure solide et d'un reseau logistique performant, nous permettant de repondre efficacement aux besoins de nos clients.", feat1: "Expertise Technique", feat2: "Solutions Sur Mesure", feat3: "Service 24/7", feat4: "Garantie Etendue" },
+                services: { badge: "Nos Services", title: "Notre Expertise a Votre Service", subtitle: "De l'etude a la maintenance, nous accompagnons chaque etape de votre projet", s1_title: "Etude & Conception", s1_desc: "Analyse de vos besoins et conception sur mesure de solutions frigorifiques adaptees a vos contraintes.", s1_1: "Etude thermique complete", s1_2: "Dimensionnement precis", s1_3: "Plans d'execution detailles", s1_4: "Devis transparent", s2_title: "Installation", s2_desc: "Installation professionnelle de vos equipements par nos techniciens certifies et experimentes.", s2_1: "Montage chambres froides", s2_2: "Installation equipements", s2_3: "Mise en service", s2_4: "Formation utilisateur", s3_title: "Maintenance Preventive", s3_desc: "Contrats de maintenance pour garantir la longevite et l'efficacite de vos installations.", s3_1: "Visites programmees", s3_2: "Controles reguliers", s3_3: "Prevention des pannes", s3_4: "Reporting detaille", s4_title: "Maintenance Curative", s4_desc: "Intervention rapide en cas de panne pour minimiser l'impact sur votre activite.", s4_1: "Intervention 24h/24, 7j/7", s4_2: "Diagnostic rapide", s4_3: "Reparation sur site", s4_4: "Pieces de rechange", s5_title: "Maintenance Equipements Tiers", s5_desc: "Nous assurons egalement la maintenance des equipements que nous n'avons pas installes.", s5_1: "Toutes marques acceptees", s5_2: "Expertise multi-equipements", s5_3: "Contrats flexibles", s5_4: "Tarifs competitifs", s6_title: "Export International", s6_desc: "Expansion internationale avec conformite aux normes globales.", s6_1: "Conformite aux normes", s6_2: "Logistique internationale", s6_3: "Support technique a distance", s6_4: "Formation en ligne", s6_highlight: "Nous avons deja commence notre phase d'expansion internationale en commencant par un projet en Libye." },
+                adiabatic: { badge: "Solution Ecologique", title: "Climatisation Adiabatique", subtitle: "La solution naturelle et eco-energetique pour le confort thermique industriel", f1_title: "Reduction de Temperature", f1_desc: "Abaissement de la temperature jusqu'a 8 a 12C selon les conditions climatiques, creant un environnement de travail optimal.", f2_title: "Economie d'Energie Exceptionnelle", f2_desc: "Jusqu'a 80% d'economie sur la consommation electrique compare a une climatisation classique. Cinq fois moins de consommation qu'un A/C.", f3_title: "Air 100% Neuf et Propre", f3_desc: "Fonctionnement en air neuf continu, amelioration de la qualite de l'air. Ventilation et renouvellement constants sans particules d'eau.", f4_title: "100% Ecologique", f4_desc: "Technologie sans fluide frigorigene, uniquement air et eau. Pas de gaz fluores, respectueuse de l'environnement.", f5_title: "Maintenance Simplifiee", f5_desc: "Couts d'exploitation reduits et maintenance simple. Fonctionnement avec portes et fenetres ouvertes possible.", comp1: "Consommation electrique vs climatisation classique", comp2: "Reduction de temperature selon conditions", comp3: "Ecologique - Sans gaz frigorigene" },
+                cold: { badge: "Solutions Frigorifiques Completes", title: "Chambres Frigorifiques & Solutions de Froid", subtitle: "Conception, installation et maintenance de tous types d'installations frigorifiques professionnelles", types_title: "Nos Solutions Frigorifiques", type1: "Chambres Froides Positives", type1_desc: "Conservation de produits frais, fruits et legumes, produits laitiers, boissons. Ideal pour la preservation courte et moyenne duree.", type2: "Chambres Froides Negatives", type2_desc: "Congelation et conservation longue duree de viandes, poissons, produits surgeles. Surgeletion rapide disponible.", type3: "Tunnels de Surgeletion", type3_desc: "Surgeletion ultra-rapide pour preserver qualite et texture. Flux d'air puissant pour refroidissement instantane.", type4: "Chambres Modulaires", type4_desc: "Solutions flexibles et evolutives, facilement demontables et transportables. Installation rapide et configuration sur mesure.", f1_title: "Controle Precis Multi-Zones", f1_desc: "Regulation independante dans chaque zone. Monitoring en temps reel de la temperature et de l'humidite pour une conservation optimale.", f2_title: "Conformite Reglementaire Totale", f2_desc: "Installations conformes aux normes HACCP et hygieniques. Tracabilite complete et certification sanitaire garantie.", f3_title: "Conception Sur Mesure", f3_desc: "Solutions personnalisees selon vos contraintes : espaces disponibles, volumes, flux de travail. Isolation haute performance garantie.", f4_title: "Efficacite Energetique", f4_desc: "Compresseurs derniere generation avec recuperation de chaleur. Economies substantielles sur vos couts d'exploitation.", f5_title: "Fiabilite & Securite", f5_desc: "Systemes de securite integres : alarmes, detection de pannes, secours automatique. Protection de vos produits garantie 24/7.", maint_title: "Services de Maintenance", maint1_title: "Maintenance Preventive", maint1_1: "Controles periodiques programmes", maint1_2: "Verification des performances", maint1_3: "Nettoyage et desinfection", maint1_4: "Remplacement preventif des pieces d'usure", maint1_5: "Optimisation energetique", maint1_6: "Rapports detailles apres intervention", maint2_title: "Maintenance Curative", maint2_1: "Intervention d'urgence 24/7", maint2_2: "Diagnostic rapide des pannes", maint2_3: "Reparation sur site", maint2_4: "Pieces de rechange en stock", maint2_5: "Remise en service garantie", maint2_6: "Suivi post-intervention" },
+                partner: { badge: "Collaboration", title: "Un Partenariat Mutuellement Benefique", subtitle: "Ce que notre collaboration peut apporter a votre developpement en Tunisie et en Afrique du Nord", chart1_title: "Croissance des Installations Adiabatiques", chart1_subtitle: "Evolution des appareils adiabatiques installes", stat1: "Appareils installes", stat2: "Clients differents", stat3: "Secteurs d'activites", stat4: "Appareils/mois moyenne", chart2_title: "Chambres Frigorifiques - 2eme Semestre 2025", chart2_subtitle: "Realisations et chiffre d'affaires", stat5: "Chambres installees", stat6: "TND Chiffre d'affaires", card1_title: "Construisons l'Avenir Ensemble", card1_text: "Votre technologie innovante associee a notre expertise locale peut creer une synergie puissante pour conquerir le marche tunisien et le marche nord-africain. Le potentiel est immense.", card2_title: "Pipeline Commercial Actif", card2_text: "Nous sommes actuellement en negociation avancee avec 4 nouveaux clients majeurs, representant +50 appareils a installer dans les 3 prochains mois.", ben1: "Reseau de distribution national etabli", ben2: "100% de clients satisfaits", ben3: "Expertise technique certifiee", ben4: "Service apres-vente professionnel", ben5: "Capacite de stockage optimisee", ben6: "Expansion internationale (Libye)" },
+                gallery: { badge: "Galerie", title: "Nos Interventions", subtitle: "Decouvrez nos interventions a travers la Tunisie.", before: "Avant intervention", during: "En intervention", after: "Apres intervention" },
+                ref: { badge: "Nos References", title: "Ils Nous Font Confiance", subtitle: "Un portefeuille clients diversifie temoignant de notre expertise" },
+                footer: { desc: "Expert en refrigeration industrielle et commerciale. Filiale du Groupe Bayoudh Metals.", mission: "Notre mission", mission_text: "Transformer l'ordinaire en extraordinaire a travers l'excellence technique et l'innovation.", services: "Nos Services", s1: "Etude & Conception", s2: "Installation", s3: "Maintenance Preventive", s4: "Maintenance Curative", s5: "Export International", contact: "Contact", rights: "Tous droits reserves.", subsidiary: "Filiale du Groupe Bayoudh Metals (GBM) | Transformons l'ordinaire en extraordinaire", designed: "Designed by" }
+            },
+            en: {
+                nav: { home: "Home", about: "About Us", services: "Services", numbers: "Figures", adiabatic: "Adiabatic", cold: "Refrigeration", partnership: "Partnership", gallery: "Gallery", references: "References" },
+                hero: { title: "General Counter of Panels and Metals", subtitle: "Subsidiary of Bayoudh Metals Group (GBM)", description: "Expert in industrial and commercial refrigeration solutions. We design and build turnkey installations for the food industry, with total commitment to technical excellence and customer satisfaction.", cta1: "Discover COGEPAM", cta2: "Contact Us" },
+                stats: { badge: "Our Figures", title: "COGEPAM in Figures", subtitle: "Numbers that testify to our commitment and expertise", stat1: "Satisfied Customers", sub1: "Quality commitment guaranteed", stat2_num: "Over 10", stat2: "Years of Experience", sub2: "Proven expertise in refrigeration", stat3_num: "Over 15", stat3: "Business Sectors", sub3: "Complete national coverage" },
+                about: { badge: "About Us", title: "Our Story & Expertise", subtitle: "From vision to reality, COGEPAM has established itself as a reference in industrial refrigeration in Tunisia", heading: "One Company, One Vision", p1: "COGEPAM (General Counter of Panels and Metals) is a company specialized in industrial and commercial refrigeration. Our business is based on developing comprehensive solutions for the food industry.", p2: "Our experience has allowed us to intervene in turnkey projects in the industrial refrigeration field. We have a technical department run by a team of qualified and experienced engineers and technicians.", p3: "As a subsidiary of Bayoudh Metals Group (GBM), we benefit from solid infrastructure and efficient logistics network, allowing us to effectively meet our customers' needs.", feat1: "Technical Expertise", feat2: "Custom Solutions", feat3: "24/7 Service", feat4: "Extended Warranty" },
+                services: { badge: "Our Services", title: "Our Expertise at Your Service", subtitle: "From study to maintenance, we accompany every step of your project", s1_title: "Study & Design", s1_desc: "Analysis of your needs and custom design of refrigeration solutions adapted to your constraints.", s1_1: "Complete thermal study", s1_2: "Precise sizing", s1_3: "Detailed execution plans", s1_4: "Transparent quote", s2_title: "Installation", s2_desc: "Professional installation of your equipment by our certified and experienced technicians.", s2_1: "Cold room assembly", s2_2: "Equipment installation", s2_3: "Commissioning", s2_4: "User training", s3_title: "Preventive Maintenance", s3_desc: "Maintenance contracts to guarantee the longevity and efficiency of your installations.", s3_1: "Scheduled visits", s3_2: "Regular checks", s3_3: "Breakdown prevention", s3_4: "Detailed reporting", s4_title: "Curative Maintenance", s4_desc: "Rapid intervention in case of breakdown to minimize impact on your activity.", s4_1: "24/7 emergency intervention", s4_2: "Rapid diagnosis", s4_3: "On-site repair", s4_4: "Spare parts", s5_title: "Third-Party Equipment", s5_desc: "We also provide maintenance for equipment we did not install.", s5_1: "All brands accepted", s5_2: "Multi-equipment expertise", s5_3: "Flexible contracts", s5_4: "Competitive rates", s6_title: "International Export", s6_desc: "International expansion with compliance to global standards.", s6_1: "Standards compliance", s6_2: "International logistics", s6_3: "Remote technical support", s6_4: "Online training", s6_highlight: "We have already started our international expansion phase beginning with a project in Libya." },
+                adiabatic: { badge: "Ecological Solution", title: "Adiabatic Air Conditioning", subtitle: "The natural and eco-energetic solution for industrial thermal comfort", f1_title: "Temperature Reduction", f1_desc: "Lowering temperature by up to 8 to 12°C depending on climatic conditions, creating an optimal working environment.", f2_title: "Exceptional Energy Savings", f2_desc: "Up to 80% savings on electricity consumption compared to classic air conditioning. Five times less consumption than A/C.", f3_title: "100% Fresh and Clean Air", f3_desc: "Continuous fresh air operation, improving air quality. Constant ventilation and renewal without water particles.", f4_title: "100% Ecological", f4_desc: "Technology without refrigerant fluid, only air and water. No fluorinated gases, environmentally friendly.", f5_title: "Simplified Maintenance", f5_desc: "Reduced operating costs and simple maintenance. Can operate with doors and windows open.", comp1: "Electricity consumption vs classic AC", comp2: "Temperature reduction depending on conditions", comp3: "Ecological - No refrigerant gas" },
+                cold: { badge: "Complete Refrigeration Solutions", title: "Cold Rooms & Refrigeration Solutions", subtitle: "Design, installation and maintenance of all types of professional refrigeration installations", types_title: "Our Refrigeration Solutions", type1: "Positive Cold Rooms", type1_desc: "Storage of fresh products, fruits and vegetables, dairy products, beverages. Ideal for short and medium term preservation.", type2: "Negative Cold Rooms", type2_desc: "Freezing and long-term storage of meat, fish, frozen products. Rapid freezing available.", type3: "Blast Freezing Tunnels", type3_desc: "Ultra-rapid freezing to preserve quality and texture. Powerful airflow for instant cooling.", type4: "Modular Cold Rooms", type4_desc: "Flexible and scalable solutions, easily dismantled and transportable. Quick installation and custom configuration.", f1_title: "Precise Multi-Zone Control", f1_desc: "Independent regulation in each zone. Real-time monitoring of temperature and humidity for optimal preservation.", f2_title: "Total Regulatory Compliance", f2_desc: "Installations compliant with HACCP and hygiene standards. Complete traceability and guaranteed sanitary certification.", f3_title: "Custom Design", f3_desc: "Customized solutions according to your constraints: available spaces, volumes, workflow. Guaranteed high-performance insulation.", f4_title: "Energy Efficiency", f4_desc: "Latest generation compressors with heat recovery. Substantial savings on your operating costs.", f5_title: "Reliability & Safety", f5_desc: "Integrated safety systems: alarms, breakdown detection, automatic backup. 24/7 product protection guaranteed.", maint_title: "Maintenance Services", maint1_title: "Preventive Maintenance", maint1_1: "Scheduled periodic checks", maint1_2: "Performance verification", maint1_3: "Cleaning and disinfection", maint1_4: "Preventive replacement of wear parts", maint1_5: "Energy optimization", maint1_6: "Detailed reports after intervention", maint2_title: "Curative Maintenance", maint2_1: "24/7 emergency intervention", maint2_2: "Rapid breakdown diagnosis", maint2_3: "On-site repair", maint2_4: "Spare parts in stock", maint2_5: "Guaranteed return to service", maint2_6: "Post-intervention follow-up" },
+                partner: { badge: "Partnership", title: "A Mutually Beneficial Partnership", subtitle: "What our collaboration can bring to your development in Tunisia and North Africa", chart1_title: "Adiabatic Installations Growth", chart1_subtitle: "Evolution of installed adiabatic devices", stat1: "Installed devices", stat2: "Different customers", stat3: "Business sectors", stat4: "Devices/month average", chart2_title: "Cold Rooms - 2nd Semester 2025", chart2_subtitle: "Achievements and turnover", stat5: "Installed rooms", stat6: "TND Turnover", card1_title: "Let's Build the Future Together", card1_text: "Your innovative technology combined with our local expertise can create a powerful synergy to conquer the Tunisian and North African markets. The potential is immense.", card2_title: "Active Commercial Pipeline", card2_text: "We are currently in advanced negotiation with 4 major new customers, representing +50 devices to be installed in the next 3 months.", ben1: "Established national distribution network", ben2: "100% satisfied customers", ben3: "Certified technical expertise", ben4: "Professional after-sales service", ben5: "Optimized storage capacity", ben6: "International expansion (Libya)" },
+                gallery: { badge: "Gallery", title: "Our Interventions", subtitle: "Discover our interventions across Tunisia.", before: "Before intervention", during: "During intervention", after: "After intervention" },
+                ref: { badge: "Our References", title: "They Trust Us", subtitle: "A diversified client portfolio testifying to our expertise" },
+                footer: { desc: "Expert in industrial and commercial refrigeration. Subsidiary of Bayoudh Metals Group.", mission: "Our mission", mission_text: "Transforming the ordinary into extraordinary through technical excellence and innovation.", services: "Our Services", s1: "Study & Design", s2: "Installation", s3: "Preventive Maintenance", s4: "Curative Maintenance", s5: "International Export", contact: "Contact", rights: "All rights reserved.", subsidiary: "Subsidiary of Bayoudh Metals Group (GBM) | Transforming the ordinary into extraordinary", designed: "Designed by" }
+            },
+            tr: {
+                nav: { home: "Ana Sayfa", about: "Hakkımızda", services: "Hizmetler", numbers: "Rakamlar", adiabatic: "Adyabatik", cold: "Soğutma", partnership: "Ortaklık", gallery: "Galeri", references: "Referanslar" },
+                hero: { title: "Paneller ve Metaller Genel Mağazası", subtitle: "Bayoudh Metals Group (GBM) İştiraki", description: "Endüstriyel ve ticari soğutma çözümlerinde uzman. Gıda endüstrisi için anahtar teslimi tesisler tasarlıyor ve inşa ediyoruz, teknik mükemmellik ve müşteri memnuniyetine tam bağlılıkla.", cta1: "COGEPAM'ı Keşfedin", cta2: "Bize Ulaşın" },
+                stats: { badge: "Rakamlarımız", title: "Rakamlarla COGEPAM", subtitle: "Bağlılığımızı ve uzmanlığımızı kanıtlayan sayılar", stat1: "Memnun Müşteriler", sub1: "Kalite taahhüdü garantili", stat2_num: "10+", stat2: "Yıllık Deneyim", sub2: "Soğutma alanında kanıtlanmış uzmanlık", stat3_num: "15+", stat3: "İş Sektörü", sub3: "Tam ulusal kapsama" },
+                about: { badge: "Hakkımızda", title: "Hikayemiz ve Uzmanlığımız", subtitle: "Vizyondan gerçeğe, COGEPAM Tunus'ta endüstriyel soğutmanın referansı haline geldi", heading: "Bir Şirket, Bir Vizyon", p1: "COGEPAM (Paneller ve Metaller Genel Mağazası), endüstriyel ve ticari soğutma alanında uzmanlaşmış bir şirkettir. Faaliyetimiz, gıda endüstrisi için kapsamlı çözümler geliştirmeye dayanmaktadır.", p2: "Deneyimimiz, endüstriyel soğutma alanında anahtar teslimi projelerde müdahale etmemizi sağladı. Nitelikli ve deneyimli mühendislerden ve teknisyenlerden oluşan bir ekiple yönetilen teknik bir departmana sahibiz.", p3: "Bayoudh Metals Group (GBM) iştiraki olarak, sağlam altyapı ve verimli lojistik ağından yararlanıyoruz, bu da müşterilerimizin ihtiyaçlarına etkili bir şekilde yanıt vermemizi sağlıyor.", feat1: "Teknik Uzmanlık", feat2: "Özel Çözümler", feat3: "7/24 Hizmet", feat4: "Genişletilmiş Garanti" },
+                services: { badge: "Hizmetlerimiz", title: "Uzmanlığımız Hizmetinizde", subtitle: "Etütten bakıma, projenizin her adımında yanınızdayız", s1_title: "Etüt ve Tasarım", s1_desc: "İhtiyaçlarınızın analizi ve kısıtlamalarınıza uygun özel soğutma çözümlerinin tasarımı.", s1_1: "Tam termik etüt", s1_2: "Hassas boyutlandırma", s1_3: "Detaylı uygulama planları", s1_4: "Şeffaf teklif", s2_title: "Montaj", s2_desc: "Sertifikalı ve deneyimli teknisyenlerimiz tarafından ekipmanlarınızın profesyonel montajı.", s2_1: "Soğuk oda montajı", s2_2: "Ekipman kurulumu", s2_3: "Devreye alma", s2_4: "Kullanıcı eğitimi", s3_title: "Önleyici Bakım", s3_desc: "Tesislerinizin uzun ömürlülüğünü ve verimliliğini garanti altına almak için bakım sözleşmeleri.", s3_1: "Planlanmış ziyaretler", s3_2: "Düzenli kontroller", s3_3: "Arıza önleme", s3_4: "Detaylı raporlama", s4_title: "Düzeltici Bakım", s4_desc: "Faaliyetiniz üzerindeki etkiyi en aza indirmek için arıza durumunda hızlı müdahale.", s4_1: "7/24 acil müdahale", s4_2: "Hızlı teşhis", s4_3: "Yerinde onarım", s4_4: "Yedek parçalar", s5_title: "Üçüncü Taraf Ekipman", s5_desc: "Montajını yapmadığımız ekipmanların bakımını da üstleniyoruz.", s5_1: "Tüm markalar kabul edilir", s5_2: "Çoklu ekipman uzmanlığı", s5_3: "Esnek sözleşmeler", s5_4: "Rekabetçi fiyatlar", s6_title: "Uluslararası İhracat", s6_desc: "Küresel standartlara uygun uluslararası genişleme.", s6_1: "Standartlara uygunluk", s6_2: "Uluslararası lojistik", s6_3: "Uzaktan teknik destek", s6_4: "Çevrimiçi eğitim", s6_highlight: "Libya'daki bir projeyle başlayarak uluslararası genişleme aşamamıza başladık." },
+                adiabatic: { badge: "Ekolojik Çözüm", title: "Adyabatik Klima", subtitle: "Endüstriyel termal konfor için doğal ve ekolojik enerji çözümü", f1_title: "Sıcaklık Düşürme", f1_desc: "İklim koşullarına bağlı olarak sıcaklığı 8 ila 12°C'ye kadar düşürme, optimal çalışma ortamı yaratma.", f2_title: "Olağanüstü Enerji Tasarrufu", f2_desc: "Klasik klima ile karşılaştırıldığında elektrik tüketiminde %80'e varan tasarruf. Klima ile karşılaştırıldığında beş kat daha az tüketim.", f3_title: "%100 Taze ve Temiz Hava", f3_desc: "Sürekli taze hava çalışması, hava kalitesinin iyileştirilmesi. Su parçacıkları olmadan sürekli havalandırma ve yenileme.", f4_title: "%100 Ekolojik", f4_desc: "Soğutucu akışkan içermeyen teknoloji, sadece hava ve su. Florlu gaz yok, çevre dostu.", f5_title: "Basitleştirilmiş Bakım", f5_desc: "Düşük işletme maliyetleri ve basit bakım. Kapılar ve pencereler açıkken çalışabilir.", comp1: "Klasik AC'ye göre elektrik tüketimi", comp2: "Koşullara göre sıcaklık düşürme", comp3: "Ekolojik - Soğutucu gaz yok" },
+                cold: { badge: "Tam Soğutma Çözümleri", title: "Soğuk Odalar ve Soğutma Çözümleri", subtitle: "Tüm profesyonel soğutma tesislerinin tasarımı, montajı ve bakımı", types_title: "Soğutma Çözümlerimiz", type1: "Pozitif Soğuk Odalar", type1_desc: "Taze ürünlerin, meyve ve sebzelerin, süt ürünlerinin, içeceklerin muhafazası. Kısa ve orta vadeli koruma için ideal.", type2: "Negatif Soğuk Odalar", type2_desc: "Et, balık, dondurulmuş ürünlerin dondurulması ve uzun süreli muhafazası. Hızlı dondurma mevcuttur.", type3: "Şok Dondurma Tünelleri", type3_desc: "Kalite ve dokuyu korumak için ultra hızlı dondurma. Anında soğutma için güçlü hava akışı.", type4: "Modüler Soğuk Odalar", type4_desc: "Esnek ve ölçeklenebilir çözümler, kolayca sökülebilir ve taşınabilir. Hızlı kurulum ve özel yapılandırma.", f1_title: "Hassas Çok Bölgeli Kontrol", f1_desc: "Her bölgede bağımsız düzenleme. Optimal koruma için sıcaklık ve nemin gerçek zamanlı izlenmesi.", f2_title: "Tam Düzenleyici Uyumluluk", f2_desc: "HACCP ve hijyen standartlarına uygun tesisler. Tam izlenebilirlik ve garantili sağlık sertifikası.", f3_title: "Özel Tasarım", f4_title: "Enerji Verimliliği", f4_desc: "Isı geri kazanımlı son nesil kompresörler. İşletme maliyetlerinizde önemli tasarruf.", f5_title: "Güvenilirlik ve Güvenlik", f5_desc: "Entegre güvenlik sistemleri: alarmlar, arıza tespiti, otomatik yedekleme. 7/24 ürün koruması garantili.", maint_title: "Bakım Hizmetleri", maint1_title: "Önleyici Bakım", maint1_1: "Planlanmış periyodik kontroller", maint1_2: "Performans doğrulama", maint1_3: "Temizlik ve dezenfeksiyon", maint1_4: "Aşınma parçalarının önleyici değişimi", maint1_5: "Enerji optimizasyonu", maint1_6: "Müdahale sonrası detaylı raporlar", maint2_title: "Düzeltici Bakım", maint2_1: "7/24 acil müdahale", maint2_2: "Hızlı arıza teşhisi", maint2_3: "Yerinde onarım", maint2_4: "Stokta yedek parçalar", maint2_5: "Garantili hizmete dönüş", maint2_6: "Müdahale sonrası takip" },
+                partner: { badge: "Ortaklık", title: "Karşılıklı Faydalı Bir Ortaklık", subtitle: "Ortaklığımızın Tunus ve Kuzey Afrika'daki gelişiminize neler katabileceği", chart1_title: "Adyabatik Montaj Büyümesi", chart1_subtitle: "Kurulu adyabatik cihazların gelişimi", stat1: "Kurulu cihazlar", stat2: "Farklı müşteriler", stat3: "İş sektörleri", stat4: "Cihaz/ay ortalama", chart2_title: "Soğuk Odalar - 2025 2. Yarıyıl", chart2_subtitle: "Başarımlar ve ciro", stat5: "Kurulan odalar", stat6: "TND Ciro", card1_title: "Geleceği Birlikte İnşa Edelim", card1_text: "Yenilikçi teknolojiniz yerel uzmanlığımızla birleştiğinde, Tunus ve Kuzey Afrika pazarlarını fethetmek için güçlü bir sinerji yaratabilir. Potansiyel muazzam.", card2_title: "Aktif Ticari Boru Hattı", card2_text: "Şu anda 4 büyük yeni müşteriyle gelişmiş müzakere aşamasındayız, önümüzdeki 3 ay içinde kurulacak +50 cihazı temsil ediyor.", ben1: "Kurulu ulusal dağıtım ağı", ben2: "%100 memnun müşteriler", ben3: "Sertifikalı teknik uzmanlık", ben4: "Profesyonel satış sonrası hizmet", ben5: "Optimize edilmiş depolama kapasitesi", ben6: "Uluslararası genişleme (Libya)" },
+                gallery: { badge: "Galeri", title: "Müdahalelerimiz", subtitle: "Tunus genelindeki müdahalelerimizi keşfedin.", before: "Müdahale öncesi", during: "Müdahale sırasında", after: "Müdahale sonrası" },
+                ref: { badge: "Referanslarımız", title: "Bize Güvenenler", subtitle: "Uzmanlığımızı kanıtlayan çeşitli müşteri portföyü" },
+                footer: { desc: "Endüstriyel ve ticari soğutma uzmanı. Bayoudh Metals Group iştiraki.", mission: "Misyonumuz", mission_text: "Teknik mükemmellik ve yenilik yoluyla sıradanı olağanüstüye dönüştürmek.", services: "Hizmetlerimiz", s1: "Etüt ve Tasarım", s2: "Montaj", s3: "Önleyici Bakım", s4: "Düzeltici Bakım", s5: "Uluslararası İhracat", contact: "İletişim", rights: "Tüm hakları saklıdır.", subsidiary: "Bayoudh Metals Group (GBM) İştiraki | Sıradanı olağanüstüye dönüştürelim", designed: "Tasarlayan" }
+            }
+        };
 
-        // Touch support for mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
+        let currentLanguage = 'fr';
 
-        slider.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
+        function toggleLangDropdown() {
+            const dropdown = document.getElementById('langDropdown');
+            dropdown.classList.toggle('active');
+        }
 
-        slider.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            if (touchStartX - touchEndX > 50) {
-                nextSlide();
-            } else if (touchEndX - touchStartX > 50) {
-                prevSlide();
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            const dropdown = document.getElementById('langDropdown');
+            const currentFlag = document.getElementById('currentFlag');
+            const currentLang = document.getElementById('currentLang');
+            
+            // Update button
+            const flags = { fr: 'https://flagcdn.com/w40/fr.png', en: 'https://flagcdn.com/w40/gb.png', tr: 'https://flagcdn.com/w40/tr.png' };
+            const labels = { fr: 'FR', en: 'EN', tr: 'TR' };
+            
+            currentFlag.src = flags[lang];
+            currentLang.textContent = labels[lang];
+            
+            // Update active state in dropdown
+            document.querySelectorAll('.lang-option').forEach(opt => opt.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            dropdown.classList.remove('active');
+            
+            // Update all text content
+            updatePageLanguage();
+        }
+
+        function updatePageLanguage() {
+            const t = translations[currentLanguage];
+            
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const keys = key.split('.');
+                let value = t;
+                keys.forEach(k => value = value[k]);
+                if (value) el.textContent = value;
+            });
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.lang-selector')) {
+                document.getElementById('langDropdown').classList.remove('active');
             }
         });
+
+        // Charts
+        // Chart 1: Adiabatic Installations (existing data)
+        const ctx1 = document.getElementById('adiabaticChart');
+        if (ctx1) {
+            new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: ['Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                    datasets: [{
+                        label: 'Nombre cumulé',
+                        data: [15, 32, 48, 71, 95, 117],
+                        borderColor: '#0066cc',
+                        backgroundColor: 'rgba(0, 102, 204, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 6,
+                        pointBackgroundColor: '#0066cc',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0,0,0,0.05)' },
+                            ticks: { color: '#666' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#666' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Chart 2: Cold Rooms (new data)
+        const ctx2 = document.getElementById('coldRoomsChart');
+        if (ctx2) {
+            new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                    datasets: [{
+                        label: 'Chambres installées',
+                        data: [2, 3, 2, 3, 3, 3],
+                        backgroundColor: 'rgba(0, 107, 143, 0.8)',
+                        borderColor: '#006b8f',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0,0,0,0.05)' },
+                            ticks: { color: '#666', stepSize: 1 }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#666' }
+                        }
+                    }
+                }
+            });
+        }
     </script>
 </body>
 </html>
